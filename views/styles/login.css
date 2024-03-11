@@ -1,0 +1,223 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    -ms-flex-direction: column;
+}
+
+main {
+    flex: 1;
+    height: 100%;
+}
+
+/* HEADER */
+.container {
+    display: grid;
+    grid-template-columns: auto 2fr 1fr;
+    grid-template-rows: 100%;
+    grid-auto-columns: 1fr;
+    gap: 20px 20px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        ". . .";
+    background-color: #09231E;
+}
+
+.logo {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 0.5em 20px;
+}
+
+.logo,
+img {
+    width: 200px;
+    display: block;
+    margin: auto;
+}
+
+.title {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: white;
+}
+
+.title text {
+    display: block;
+    margin: auto;
+}
+
+.login {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: #09231E;
+}
+
+.login button {
+    font-family: 'Montserrat', sans-serif;
+    color: whitesmoke;
+    background-color: transparent;
+    font-size: 1em;
+    margin: 0 50px;
+    width: fit-content;
+    height: fit-content;
+    border: none;
+}
+
+/* .searchbar {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* BODY */
+.main-container {
+    display: grid;
+    grid-template-columns: 200px 2fr 1fr;
+    grid-template-rows: 100%;
+    grid-auto-columns: 1fr;
+    gap: 20px 20px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        ". . .";
+    padding-left: 20px;
+    height: 100%;
+}
+
+.principal {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    background-color: #F9F3ED;
+    height: 100%;
+}
+
+.main-container h1 {
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 3em;
+    margin-left: 50px;
+    margin-bottom: 70px;
+}
+
+.main-container h2 {
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 2em;
+    margin-left: 50px;
+}
+
+.select-input h2{
+    margin-left: 0;
+}
+
+.main-container input[type="text"] {
+    width: 500px;
+    padding: 10px;
+    margin-left: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 2em;
+    color: #09231E;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contenedor {
+    width: 100%;
+    display: flex;
+    height: 100px;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+.main-container button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: white;
+    background-color: #09231E;
+    font-size: 2em;
+    width: 20em;
+    height: fit-content;
+    border: none;
+    align-self: center;
+    padding: 10px 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-input,
+.select-input {
+    flex: 1;
+    margin-right: 50px;
+}
+
+.select-input select  {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 2em;
+    color: #09231E;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* FOOTER */
+footer {
+    background-color: #09231E;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    position: relative;
+    height: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

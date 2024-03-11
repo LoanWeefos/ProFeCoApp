@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* HEADER */
+.container {
+    display: grid;
+    grid-template-columns: auto 2fr 1fr;
+    grid-template-rows: 100%;
+    grid-auto-columns: 1fr;
+    gap: 20px 20px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        ". . .";
+    background-color: #09231E;
+}
+
+.logo {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 0.5em 20px;
+}
+
+.logo,
+img {
+    width: 200px;
+    display: block;
+    margin: auto;
+}
+
+.title {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: white;
+}
+
+.title text {
+    display: block;
+    margin: auto;
+}
+
+.login {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: #09231E;
+}
+
+.login button {
+    font-family: 'Montserrat', sans-serif;
+    color: whitesmoke;
+    background-color: transparent;
+    font-size: 1em;
+    margin: 0 50px;
+    width: fit-content;
+    height: fit-content;
+    border: none;
+}
+
+/* .searchbar {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* BODY */
+.banner {
+    position: relative;
+    flex: 1;
+}
+
+.banner img {
+    width: 100%;
+}
+
+.banner h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    font-family: 'Montserrat', sans-serif;
+    color: #09231E;
+    font-size: 4em;
+    text-align: center;
+}
+
+.container-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 50px 200px;
+    padding: 20px;
+}
+
+.container-buttons button {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background-color: #941434;
+    font-size: 2em;
+    width: 100%;
+    margin: 0 50px;
+    height: fit-content;
+    border: 2px solid black;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+    background-color: #09231E;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
