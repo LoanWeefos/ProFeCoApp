@@ -103,7 +103,7 @@ img {
     position: absolute;
     top: 65%;
     left: 28%;
-    background: #eee;
+    background: none;
     padding: 0;
     list-style-type: none;
     margin-top: 0;
@@ -236,23 +236,19 @@ button:hover {
     margin-right: 50px;
 }
 
-.etiquetas button{
+.etiquetas button {
     flex: 1;
     margin-right: 50px;
     width: fit-content;
-    padding: 0 50px;
+    padding: 11px 50px;
     border-radius: 5px;
     height: fit-content;
+    font-size: 2em;
 }
 
-.select-input select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
-    font-size: 2em;
-    color: #09231E;
-    font-family: 'Montserrat', sans-serif;
+.etiquetas-container {
+    display: inline-flex;
+    align-items: end;
 }
 
 /* FOOTER */

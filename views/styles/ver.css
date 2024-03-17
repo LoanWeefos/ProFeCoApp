@@ -45,8 +45,7 @@ main {
     padding: 0.5em 20px;
 }
 
-.logo,
-img {
+.logo img {
     width: 200px;
     display: block;
     margin: auto;
@@ -69,7 +68,7 @@ img {
     margin: auto;
 }
 
-.login {
+.user {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     display: flex;
@@ -79,34 +78,64 @@ img {
     font-weight: bold;
     font-size: 1.4em;
     color: #09231E;
+    position: relative;
 }
 
-.login button {
+.user h1 {
     font-family: 'Montserrat', sans-serif;
     color: whitesmoke;
     background-color: transparent;
     font-size: 1em;
-    margin: 0 50px;
     width: fit-content;
     height: fit-content;
     border: none;
+    list-style: none;
+    padding: 0;
 }
 
-/* .searchbar {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.dropdown-arrow {
+    cursor: pointer;
 }
 
-.user {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
+.user ul {
+    display: none;
+    position: absolute;
+    top: 65%;
+    left: 35%;
+    background: none;
+    padding: 0;
+    list-style-type: none;
+    margin-top: 0;
+}
+
+.user ul li {
+    float: none;
+    width: fit-content;
+    margin-top: 0;
+}
+
+.user ul a {
+    line-height: 120%;
+    padding: 10px 15px;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    color: #09231E;
+    background-color: white;
+    font-size: 1em;
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid black;
+    text-decoration: none;
+}
+
+.user h1:hover+ul {
+    display: block;
+}
+
+.user ul:hover {
+    display: block;
+}
+
 
 /* BODY */
 .main-container {
@@ -127,6 +156,16 @@ img {
     grid-row: 1 / 2;
     background-color: #F9F3ED;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.principal img{
+    align-self: flex-start;
+    min-width: 300px;
+    max-width: 800px;
+    margin-left: 50px;
 }
 
 .main-container h1 {
@@ -135,7 +174,6 @@ img {
     font-weight: 400;
     font-size: 3em;
     margin-left: 50px;
-    margin-bottom: 70px;
 }
 
 .main-container h2 {
