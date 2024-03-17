@@ -3,9 +3,11 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
 }
 
-html h1{
+html h1 {
     user-select: none;
 }
 
@@ -67,7 +69,7 @@ img {
     margin: auto;
 }
 
-.login {
+.user {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     display: flex;
@@ -77,34 +79,64 @@ img {
     font-weight: bold;
     font-size: 1.4em;
     color: #09231E;
+    position: relative;
 }
 
-.login button {
+.user h1 {
     font-family: 'Montserrat', sans-serif;
     color: whitesmoke;
     background-color: transparent;
     font-size: 1em;
-    margin: 0 50px;
     width: fit-content;
     height: fit-content;
     border: none;
+    list-style: none;
+    padding: 0;
 }
 
-/* .searchbar {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.dropdown-arrow {
+    cursor: pointer;
 }
 
-.user {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
+.user ul {
+    display: none;
+    position: absolute;
+    top: 65%;
+    left: 28%;
+    background: #eee;
+    padding: 0;
+    list-style-type: none;
+    margin-top: 0;
+}
+
+.user ul li {
+    float: none;
+    width: fit-content;
+    margin-top: 0;
+}
+
+.user ul a {
+    line-height: 120%;
+    padding: 10px 15px;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    color: #09231E;
+    background-color: white;
+    font-size: 1em;
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid black;
+    text-decoration: none;
+}
+
+.user h1:hover+ul {
+    display: block;
+}
+
+.user ul:hover {
+    display: block;
+}
+
 
 /* BODY */
 .main-container {
@@ -144,11 +176,12 @@ img {
     margin-left: 50px;
 }
 
-.select-input h2{
+.select-input h2 {
     margin-left: 0;
 }
 
-.main-container input[type="text"] {
+.main-container input[type="text"],
+textarea {
     width: 500px;
     padding: 10px;
     margin-left: 50px;
@@ -198,7 +231,21 @@ button:hover {
     margin-right: 50px;
 }
 
-.select-input select  {
+.desc-input {
+    flex: 1;
+    margin-right: 50px;
+}
+
+.etiquetas button{
+    flex: 1;
+    margin-right: 50px;
+    width: fit-content;
+    padding: 0 50px;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+.select-input select {
     width: 100%;
     padding: 10px;
     border: 1px solid black;

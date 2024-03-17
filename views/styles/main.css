@@ -3,6 +3,10 @@ body {
     min-height: 100vh;
 }
 
+html h1{
+    user-select: none;
+}
+
 main {
     flex: 1;
 }
@@ -26,7 +30,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
     padding: 0.5em 20px;
 }
 

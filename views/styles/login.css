@@ -5,6 +5,10 @@ html {
     padding: 0;
 }
 
+html h1{
+    user-select: none;
+}
+
 .wrapper {
     display: flex;
     height: 100%;
@@ -36,7 +40,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
     padding: 0.5em 20px;
 }
 
