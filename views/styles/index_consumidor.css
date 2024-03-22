@@ -223,6 +223,10 @@ img {
     font-size: 1.2vw;
 }
 
+.button-ver button {
+    font-size: 1.2vw;
+}
+
 .button-ver {
     background: black;
     width: 100%;

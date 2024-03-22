@@ -18,7 +18,8 @@
         <header>
             <section class="container">
                 <div class="logo">
-                    <a href="index.html"><img src="../utils/images/logo.png" alt="Procuraduría Federal del Consumidor"></a>
+                    <a href="index.html"><img src="../utils/images/logo.png"
+                            alt="Procuraduría Federal del Consumidor"></a>
                 </div>
                 <div class="title">
                     <h1 class="title-text">ProFeCo App</h1>
@@ -34,16 +35,43 @@
         <main>
             <section class="main-container">
                 <div class="principal">
-                    <h1>Nutricileche</h1>
+                    <div class="producto-precio">
+                        <h1>Nutricileche</h1>
+                        <h1>$18.50</h1>
+                    </div>
                     <h2>Vendido por Wallart</h2>
                     <img src="../utils/images/lulu.jpeg" alt="producto">
+                    <p>Con 66% de leche, Nutricileche es una buena opción para acompañar tu desayuno. Disfruta de su
+                        delicioso sabor y acompaña tus alimentos favoritos. ¡A ti y a tu familia les encantará!</p>
+
+                    <div class="agregar-ver">
+                        <button class="button-agregar">Agregar a lista</button>
+                        <button class="button-ver">Ver en otras tiendas</button>
+                    </div>
+                    <div class="calificacion">
+                        <label for="comentario">
+                            <h3>¡Califícalo!</h3>
+                        </label>
+                        <div class="cc-selector">
+                            <input id="like" type="radio" name="calif" value="like" />
+                            <label class="calif-cc1 like" for="like"></label>
+                            <input id="dislike" type="radio" name="calif" value="dislike" />
+                            <label class="calif-cc2 dislike" for="dislike"></label>
+                        </div>
+                        <button class="button-enviar">Enviar</button>
+                    </div>
+                    <div class="comentario-reportar">
+                        <textarea id="comentario"></textarea>
+                        <button class="button-reportar">Reportar</button>
+                    </div>
                 </div>
             </section>
-        </main>        
-        <footer>
-            <p>Desarrollado por equipo ProFeCo</p>
-        </footer>
+        </main>
     </div>
+
+    <footer>
+        <p>Desarrollado por equipo ProFeCo</p>
+    </footer>
 </body>
 
 </html>
