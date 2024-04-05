@@ -15,7 +15,6 @@ main {
 .container {
     display: grid;
     grid-template-columns: auto 2fr 1fr;
-    grid-template-rows: 100%;
     grid-auto-columns: 1fr;
     gap: 20px 20px;
     grid-auto-flow: row;
@@ -120,7 +119,7 @@ img {
 .container-buttons {
     display: flex;
     justify-content: center;
-    margin: 50px 200px;
+    margin: 50px 5%;
     padding: 20px;
 }
 
@@ -144,10 +143,11 @@ footer {
     background-color: #09231E;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
-    padding: 20px;
     text-align: center;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    min-height: 100px;
+    align-content: space-around;
 }

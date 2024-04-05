@@ -7,7 +7,7 @@ html {
     font-weight: bold;
 }
 
-html h1{
+html h1 {
     user-select: none;
 }
 
@@ -26,10 +26,9 @@ main {
 /* HEADER */
 .container {
     display: grid;
-    grid-template-columns: auto 2fr 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
     grid-template-rows: 100%;
     grid-auto-columns: 1fr;
-    gap: 20px 20px;
     grid-auto-flow: row;
     grid-template-areas:
         ". . .";
@@ -111,20 +110,18 @@ img {
 /* BODY */
 .main-container {
     display: grid;
-    grid-template-columns: 200px 4fr 1fr;
-    grid-template-rows: 100%;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: auto auto;
     grid-auto-columns: 1fr;
-    gap: 20px 20px;
     grid-auto-flow: row;
     grid-template-areas:
-        ". . .";
-    padding-left: 20px;
+        ". a ."
+        "b b b";
     height: 100%;
 }
 
 .principal {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-area: a;
     background-color: #F9F3ED;
     height: 100%;
 }
@@ -143,17 +140,18 @@ img {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 2em;
-    margin-left: 50px;
+    margin-left: 8%;
 }
 
-.select-input h2{
+.select-input h2 {
     margin-left: 0;
 }
 
 .main-container input[type="text"] {
-    width: 500px;
+    width: calc(100% - 2 * 4%);
+    max-width: 500px;
     padding: 10px;
-    margin-left: 50px;
+    margin-left: 8%;
     border: 1px solid black;
     border-radius: 5px;
     font-size: 2em;
@@ -197,10 +195,11 @@ button:hover {
 .text-input,
 .select-input {
     flex: 1;
-    margin-right: 50px;
+    margin-right: 8%;
+    max-width: 50%;
 }
 
-.select-input select  {
+.select-input select {
     width: 100%;
     padding: 10px;
     border: 1px solid black;
@@ -212,12 +211,14 @@ button:hover {
 
 /* FOOTER */
 footer {
+    grid-area: b;
     background-color: #09231E;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     position: relative;
-    height: 100px;
+    height: auto;
+    max-height: 100px;
     bottom: 0;
     left: 0;
     right: 0;

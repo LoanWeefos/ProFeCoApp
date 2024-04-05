@@ -98,8 +98,6 @@ main {
 .user ul {
     display: none;
     position: absolute;
-    top: 65%;
-    left: 35%;
     background: none;
     padding: 0;
     list-style-type: none;
@@ -158,9 +156,9 @@ main {
 
 .principal img {
     align-self: flex-start;
-    min-width: 300px;
     max-width: 800px;
-    margin-left: 50px;
+    margin-left: 4%;
+    width: 70%;
 }
 
 .producto-precio {
@@ -170,15 +168,15 @@ main {
 }
 
 .producto-precio h1 {
-    margin-right: 50px;
+    margin-right: 4%;
 }
 
 .main-container h1 {
     color: black;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
-    font-size: 3em;
-    margin-left: 50px;
+    font-size: 3vw;
+    margin-left: 4%;
     margin-bottom: 0;
 }
 
@@ -186,8 +184,8 @@ main {
     color: black;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 2em;
-    margin-left: 50px;
+    font-size: 1.8vw;
+    margin-left: 4%;
 }
 
 .main-container p {
@@ -195,7 +193,7 @@ main {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 1em;
-    margin: 20px 50px 50px 50px;
+    margin: 20px 4% 50px 4%;
 }
 
 .main-container h3 {
@@ -242,35 +240,35 @@ main {
 .button-agregar button,
 .button-ver button,
 .button-reportar button {
-    font-size: 1.2vw;
+    font-size: 1.5em;
 }
 
 .button-ver {
     background: black;
     width: 100%;
     height: 100%;
-    margin-right: 50px;
+    margin-right: 4%;
 }
 
 .button-agregar {
     background: #4B8DDA;
     width: 100%;
     height: 100%;
-    margin-left: 50px;
+    margin-left: 4%;
 }
 
 .button-reportar{
     background: #D34F4F;
     width: 100%;
     height: fit-content;
-    margin-right: 50px;
+    margin-right: 4%;
     align-self: flex-end;
     margin-bottom: 2%;
 }
 
 .button-enviar{
     background: #3FC23D;
-    width: 100%;
+    width: fit-content;
     height: fit-content;
     margin-left: auto;
 }
@@ -288,7 +286,6 @@ button {
     height: 100%;
     width: 100%;
     padding: 15px;
-    font-size: 1vw;
     max-width: 20%;
     font-family: 'Montserrat', sans-serif;
     border-radius: 5px;
@@ -325,7 +322,7 @@ button:hover {
     align-items: center;
     margin-top: 50px;
     margin-left: 4%;
-    width: 50%;
+    width: calc(70% - 4%);
 }
 
 .cc-selector {
@@ -394,8 +391,8 @@ button:hover {
 }
 
 textarea {
-    margin-left: 50px;
-    min-width: 50%;
+    margin-left: 4%;
+    min-width: calc(70% - 4%);
     min-height: 100px;
     margin-bottom: 2%;
     padding: 0;
