@@ -70,13 +70,17 @@ main {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     font-size: 1.4em;
     color: #09231E;
-    position: relative;
+    float: left;
+    overflow: hidden;
+    max-height: 100px;
+}
+
+.userText {
+    margin: auto;
 }
 
 .user h1 {
@@ -88,7 +92,7 @@ main {
     height: fit-content;
     border: none;
     list-style: none;
-    padding: 0;
+    margin: 0;
 }
 
 .dropdown-arrow {
@@ -100,20 +104,20 @@ main {
     position: absolute;
     background: none;
     padding: 0;
+    margin: 0;
     list-style-type: none;
-    margin-top: 0;
 }
 
 .user ul li {
     float: none;
-    width: fit-content;
+    width: 100%;
     margin-top: 0;
 }
 
 .user ul a {
     line-height: 120%;
     padding: 10px 15px;
-    display: inline-block;
+    display: block;
     font-family: 'Montserrat', sans-serif;
     color: #09231E;
     background-color: white;
@@ -124,14 +128,10 @@ main {
     text-decoration: none;
 }
 
-.user h1:hover+ul {
+.userText h1:hover+ul,
+.userText>ul:hover {
     display: block;
 }
-
-.user ul:hover {
-    display: block;
-}
-
 
 /* BODY */
 .main-container {

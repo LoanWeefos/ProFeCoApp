@@ -18,16 +18,19 @@
         <header>
             <section class="container">
                 <div class="logo">
-                    <a href="index.html"><img src="../utils/images/logo.png" alt="Procuraduría Federal del Consumidor"></a>
+                    <a href="index.html"><img src="../utils/images/logo.png"
+                            alt="Procuraduría Federal del Consumidor"></a>
                 </div>
                 <div class="title">
                     <h1 class="title-text">ProFeCo App</h1>
                 </div>
                 <div class="user">
-                    <h1>Wallart <span class="dropdown-arrow">▼</span></h1>
-                    <ul>
-                        <li><a href="index.html">Cerrar sesión</a></li>
-                    </ul>
+                    <div class="userText">
+                        <h1>Wallart <span class="dropdown-arrow">▼</span></h1>
+                        <ul>
+                            <li><a href="index.html">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
         </header>
@@ -36,11 +39,11 @@
                 <div class="principal">
                     <h1>Reportes</h1>
                     <div class="input-container">
-                        <div class="text-input">
+                        <div style="grid-area: a;">
                             <h2>Productos:</h2>
                             <input type="text" id="productos" name="productos">
                         </div>
-                        <div class="select-input">
+                        <div style="grid-area: b;" class="select-input">
                             <h2>Tipo de reporte:</h2>
                             <select id="tipo-reporte" name="tipo-reporte">
                                 <option value="comentarios">Comentarios</option>
@@ -48,20 +51,24 @@
                                 <option value="wishlist">Wishlist</option>
                             </select>
                         </div>
+                        <div style="grid-area: c;">
+                            <h2>Desde:</h2>
+                            <input type="date" id="desde" name="desde">
+                        </div>
+                        <div style="grid-area: d;">
+                            <h2>Hasta:</h2>
+                            <input type="date" id="hasta" name="hasta">
+                        </div>
                     </div>
-                    <h2>Desde:</h2>
-                    <input type="date" id="desde" name="desde">
-                    <h2>Hasta:</h2>
-                    <input type="date" id="hasta" name="hasta">
                     <div class="contenedor">
                         <button onclick="location.href='productos_empresa.html'">Generar</button>
                     </div>
                 </div>
+                <footer>
+                    <p>Desarrollado por equipo ProFeCo</p>
+                </footer>
             </section>
-        </main>        
-        <footer>
-            <p>Desarrollado por equipo ProFeCo</p>
-        </footer>
+        </main>
     </div>
 </body>
 

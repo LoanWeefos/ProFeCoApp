@@ -96,13 +96,17 @@ img {
     grid-column: 3 / 4;
     grid-row: 1 / 2;
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     font-size: 1.4em;
     color: #09231E;
-    position: relative;
+    float: left;
+    overflow: hidden;
+    max-height: 100px;
+}
+
+.userText {
+    margin: auto;
 }
 
 .user h1 {
@@ -114,7 +118,7 @@ img {
     height: fit-content;
     border: none;
     list-style: none;
-    padding: 0;
+    margin: 0;
 }
 
 .dropdown-arrow {
@@ -124,24 +128,22 @@ img {
 .user ul {
     display: none;
     position: absolute;
-    top: 65%;
-    left: 28%;
     background: none;
     padding: 0;
+    margin: 0;
     list-style-type: none;
-    margin-top: 0;
 }
 
 .user ul li {
     float: none;
-    width: fit-content;
+    width: 100%;
     margin-top: 0;
 }
 
 .user ul a {
     line-height: 120%;
     padding: 10px 15px;
-    display: inline-block;
+    display: block;
     font-family: 'Montserrat', sans-serif;
     color: #09231E;
     background-color: white;
@@ -152,32 +154,26 @@ img {
     text-decoration: none;
 }
 
-.user h1:hover+ul {
+.userText h1:hover+ul,
+.userText>ul:hover {
     display: block;
 }
-
-.user ul:hover {
-    display: block;
-}
-
 
 /* BODY */
 .main-container {
     display: grid;
-    grid-template-columns: 200px 4fr 1fr;
-    grid-template-rows: 100%;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: auto auto;
     grid-auto-columns: 1fr;
-    gap: 20px 20px;
     grid-auto-flow: row;
     grid-template-areas:
-        ". . .";
-    padding-left: 20px;
+        ". a ."
+        "b b b";
     height: 100%;
 }
 
 .principal {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-area: a;
     background-color: #F9F3ED;
     height: 100%;
 }
@@ -196,7 +192,6 @@ img {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 2em;
-    margin-left: 50px;
 }
 
 .select-input h2 {
@@ -205,9 +200,9 @@ img {
 
 .main-container input[type="text"],
 input[type="date"] {
-    width: 500px;
+    width: calc(100% - 2 * 4%);
+    max-width: 500px;
     padding: 10px;
-    margin-left: 50px;
     border: 1px solid black;
     border-radius: 5px;
     font-size: 2em;
@@ -244,14 +239,17 @@ button:hover {
 }
 
 .input-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.text-input,
-.select-input {
-    flex: 1;
-    margin-right: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "a b"
+        "c ."
+        "d .";
+    column-gap: 4%;
+    margin: 0 4%;
 }
 
 .select-input select {
@@ -266,12 +264,14 @@ button:hover {
 
 /* FOOTER */
 footer {
+    grid-area: b;
     background-color: #09231E;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     position: relative;
-    height: 100px;
+    height: auto;
+    max-height: 100px;
     bottom: 0;
     left: 0;
     right: 0;

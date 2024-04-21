@@ -18,7 +18,8 @@
         <header>
             <section class="container">
                 <div class="logo">
-                    <a href="index.html"><img src="../utils/images/logo.png" alt="Procuraduría Federal del Consumidor"></a>
+                    <a href="index.html"><img src="../utils/images/logo.png"
+                            alt="Procuraduría Federal del Consumidor"></a>
                 </div>
                 <div class="title">
                     <h1 class="title-text">ProFeCo App</h1>
@@ -30,11 +31,11 @@
                 <div class="principal">
                     <h1>Crear usuario</h1>
                     <div class="input-container">
-                        <div class="text-input">
+                        <div style="grid-area: a;">
                             <h2>Nombre de tu negocio</h2>
                             <input type="text" id="nombre" name="nombre">
                         </div>
-                        <div class="select-input">
+                        <div class="select-input" style="grid-area: b;">
                             <h2>Tipo de negocio</h2>
                             <select id="tipo-negocio" name="tipo-negocio">
                                 <option value="mercado-popular">Mercado popular</option>
@@ -42,35 +43,24 @@
                                 <option value="mercado-sobre-ruedas">Mercado sobre ruedas</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="input-container">
-                        <div class="text-input">
+                        <div style="grid-area: c;">
                             <h2>Correo</h2>
                             <input type="text" id="correo" name="correo">
                         </div>
-                        <div class="text-input">
-                            <input type="hidden" id="relleno" name="relleno">
-                        </div>
-                    </div>
-                    
-                    <div class="input-container">
-                        <div class="text-input">
+                        <div style="grid-area: d;">
                             <h2>Contraseña</h2>
                             <input type="text" id="contraseña" name="contraseña">
-                        </div>
-                        <div class="text-input">
-                            <input type="hidden" id="relleno" name="relleno">
                         </div>
                     </div>
                     <div class="contenedor">
                         <button onclick="location.href='productos_empresa.html'">Crear</button>
                     </div>
                 </div>
+                <footer>
+                    <p>Desarrollado por equipo ProFeCo</p>
+                </footer>
             </section>
-        </main>        
-        <footer>
-            <p>Desarrollado por equipo ProFeCo</p>
-        </footer>
+        </main>
     </div>
 </body>
 
