@@ -10,7 +10,6 @@
     <link href='../utils/images/favicon.png' rel='icon'>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
-    <!-- <script src='main.js'></script> -->
 </head>
 
 <body>
@@ -33,10 +32,10 @@
                     <h2>Correo</h2>
                     <input type="text" id="correo" name="correo">
                     <h2>Contraseña</h2>
-                    <input type="text" id="correo" name="correo">
+                    <input type="text" id="contraseña" name="contraseña">
                     <h2><a href="index.html">Crear cuenta</a></h2>
                     <div class="contenedor">
-                        <button onclick="location.href='sistema_sanciones.html'">Ingresar</button>
+                        <button id="login-button" onclick="iniciarSesion()">Ingresar</button>
                     </div>
                 </div>
                 <footer>
@@ -45,6 +44,8 @@
             </section>
         </main>
     </div>
+    <script src='../sistemaUsuarios/services/iniciarSesion.service.js'></script>
+    <script src='./scripts.views/alerta.js'></script>
 </body>
 
 </html>
