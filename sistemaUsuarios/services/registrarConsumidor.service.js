@@ -1,19 +1,23 @@
-function iniciarSesion() {
-    document.getElementById('login-button').disabled = true;
+function crearEmpresa() {
+    document.getElementById('register-button').disabled = true;
 
+    const nombre = document.getElementById('nombre').value;
     const correo = document.getElementById('correo').value;
     const contraseña = document.getElementById('contraseña').value;
+    const apellido_paterno = document.getElementById('apellidop').value;
+    const apellido_materno = document.getElementById('apellidom').value;
+    const tipo = "MERCADO"
 
-    fetch('http://localhost:8080/api/login', {
+    fetch('http://localhost:8080/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ correo, contraseña })
+        body: JSON.stringify({ nombre, correo, contraseña, tipo, apellido_paterno, apellido_materno })
     })
         .then(response => {
             if (response.ok) {
-                document.getElementById('login-button').disabled = false;
+                document.getElementById('register-button').disabled = false;
                 return response.json();
             } else if (response.status === 400) {
                 return response.json().then(data => {
@@ -28,7 +32,6 @@ function iniciarSesion() {
         })
         .then(data => {
             let token = data.access_token;
-            console.log(token);
             fetch('http://localhost:8080/api/user', {
                 method: 'GET',
                 headers: {
@@ -49,33 +52,20 @@ function iniciarSesion() {
                     throw new Error('Error en la solicitud');
                 }
             }).then(data => {
-                let link;
-                switch (data.tipo) {
-                    case "ADMIN":
-                        link = "sistema_sanciones.html"
-                        break;
-                    case "CONSUMIDOR":
-                        link = "productos_consumidor.html"
-                        break;
-                    case "MERCADO":
-                        link = "productos_empresa.html"
-                        break;
-                    default:
-                        break;
-                }
+                let link = "productos_consumidor.html";
                 sessionStorage.setItem('token', token);
                 customAlert.alert("¡Inicio de sesión exitoso!", "", link);
             })
                 .catch(error => {
-                    document.getElementById('login-button').disabled = false;
+                    document.getElementById('register-button').disabled = false;
                     customAlert.alert(error, 'Error!');
                 });
         })
         .catch(error => {
-            document.getElementById('login-button').disabled = false;
+            document.getElementById('register-button').disabled = false;
             if (error instanceof TypeError && error.message === "Failed to fetch") {
                 error = "Sin conexión con el servidor";
             }
             customAlert.alert(error, 'Error!');
-        }); 
+        });
 }
