@@ -1,7 +1,7 @@
 const { Usuario } = require('../../models');
 const { Mercado } = require('../../models');
 const { Consumidor } = require('../../models');
-const cacheUtil = require('../utils/cache.util');
+const cacheUtil = require('../../utils/cache.util');
 
 exports.createUser = (user) => {
     return Usuario.create(user);

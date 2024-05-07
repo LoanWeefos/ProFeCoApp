@@ -1,7 +1,7 @@
 const UserService = require('../services/user.service');
 const jwtConfig = require('../../config/jwt.config');
-const bcryptUtil = require('../utils/bcrypt.util');
-const jwtUtil = require('../utils/jwt.util');
+const bcryptUtil = require('../../utils/bcrypt.util');
+const jwtUtil = require('../../utils/jwt.util');
 
 exports.register = async (req, res) => {
     const isExist = await UserService.findUserByEmail(req.body.correo);
@@ -62,8 +62,7 @@ exports.getUser = async (req, res) => {
 }
 
 exports.logout = async (req, res) => {
-    await UserService.logoutUser(req.token, req.user.exp);
-    sessionStorage.clear;
+    await UserService.logoutUser(req.token, 3600);
     return res.json({ message: 'Cerrado sesión correctamente.' });
 }
 

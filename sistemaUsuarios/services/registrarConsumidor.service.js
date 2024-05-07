@@ -1,4 +1,4 @@
-function crearEmpresa() {
+function crearConsumidor() {
     document.getElementById('register-button').disabled = true;
 
     const nombre = document.getElementById('nombre').value;
@@ -6,7 +6,7 @@ function crearEmpresa() {
     const contraseña = document.getElementById('contraseña').value;
     const apellido_paterno = document.getElementById('apellidop').value;
     const apellido_materno = document.getElementById('apellidom').value;
-    const tipo = "MERCADO"
+    const tipo = "CONSUMIDOR"
 
     fetch('http://localhost:8080/api/register', {
         method: 'POST',

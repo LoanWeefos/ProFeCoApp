@@ -9,11 +9,12 @@ npm install bcrypt@5.1.1 cookie-parser@1.4.6 cors@2.8.5 dotenv@16.4.5 express@4.
 # Código para crear la base de datos:
 ```
 npx sequelize db:create
-npx sequelize db:migrate --name 20240421062414-create-usuario
-npx sequelize db:migrate --name 20240421062420-create-consumidor
-npx sequelize db:migrate --name 20240421062427-create-mercado
-npx sequelize db:migrate --name 20240421063715-create-imagen
+npx sequelize db:migrate --name 20240421093316-create-usuario
+npx sequelize db:migrate --name 20240421093320-create-consumidor
+npx sequelize db:migrate --name 20240421093322-create-mercado
+npx sequelize db:migrate --name 20240421093348-create-imagen
 npx sequelize db:migrate --name 20240421093351-create-producto
+npx sequelize db:migrate --name 20240507071703-create-categoria
 npx sequelize db:migrate --name 20240421093329-create-calificacion
 npx sequelize db:migrate --name 20240421093332-create-reporte
 npx sequelize db:migrate --name 20240421093335-create-lista-deseos

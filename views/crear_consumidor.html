@@ -18,7 +18,8 @@
         <header>
             <section class="container">
                 <div class="logo">
-                    <a href="index.html"><img src="../utils/images/logo.png" alt="Procuraduría Federal del Consumidor"></a>
+                    <a href="index.html"><img src="../utils/images/logo.png"
+                            alt="Procuraduría Federal del Consumidor"></a>
                 </div>
                 <div class="title">
                     <h1 class="title-text">ProFeCo App</h1>
@@ -56,15 +57,17 @@
                         </div>
                     </div>
                     <div class="contenedor">
-                        <button onclick="location.href='productos_consumidor.html'">Crear</button>
+                        <button id="register-button" onclick="crearConsumidor()">Crear</button>
                     </div>
-                </div>        
+                </div>
                 <footer>
                     <p>Desarrollado por equipo ProFeCo</p>
                 </footer>
             </section>
         </main>
     </div>
+    <script src='../sistemaUsuarios/services/registrarConsumidor.service.js'></script>
+    <script src='./scripts.views/alerta.js'></script>
 </body>
 
 </html>

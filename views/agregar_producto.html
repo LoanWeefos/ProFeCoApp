@@ -68,6 +68,12 @@
                             <button>+</button>
                         </div>
                     </div>
+                    <div class="etiquetas-container">
+                        <div class="image-input">
+                            <h2>Importar Imagen</h2>
+                            <input type="file" id="imagen" accept="image/*">
+                        </div>
+                    </div>
                     <div class="contenedor">
                         <button onclick="location.href='productos_empresa.html'">Agregar</button>
                     </div>
@@ -79,6 +85,18 @@
         </main>
     </div>
     <script src='../sistemaUsuario/services/verificar.service.js' ruta="agregar_producto.html"></script>
+    <script src='./scripts.views/alerta.js'></script>
+    <script>
+        document.getElementById('imagen').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const fileType = file.type;
+
+            if (!fileType.startsWith('image/')) {
+                customAlert.alert("Por favor, selecciona un archivo de imagen.");
+                event.target.value = '';
+            }
+        });
+    </script>
 </body>
 
 </html>

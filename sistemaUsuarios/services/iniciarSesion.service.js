@@ -28,7 +28,6 @@ function iniciarSesion() {
         })
         .then(data => {
             let token = data.access_token;
-            console.log(token);
             fetch('http://localhost:8080/api/user', {
                 method: 'GET',
                 headers: {
