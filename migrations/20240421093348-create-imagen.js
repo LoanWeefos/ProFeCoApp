@@ -15,6 +15,16 @@ module.exports = {
       path: {
         type: Sequelize.STRING
       },
+      productoId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Productos',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        hooks: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -26,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Imagens');
+    await queryInterface.dropTable('Imagenes');
   }
 };

@@ -15,16 +15,21 @@ module.exports = {
       precio: {
         type: Sequelize.DECIMAL(10, 2)
       },
+      oferta: {
+        type: Sequelize.STRING
+      },
       descripcion: {
         type: Sequelize.STRING
       },
-      imagenId: {
+      usuarioId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Imagenes',
-          key: 'id',
+          model: 'Usuarios',
+          key: 'id'
         },
+        onDelete: 'CASCADE',
+        hooks: true
       },
       createdAt: {
         allowNull: false,

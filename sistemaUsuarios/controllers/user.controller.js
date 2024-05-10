@@ -3,6 +3,9 @@ const jwtConfig = require('../../config/jwt.config');
 const bcryptUtil = require('../../utils/bcrypt.util');
 const jwtUtil = require('../../utils/jwt.util');
 
+const { Mercado } = require('../../models');
+const { Consumidor } = require('../../models');
+
 exports.register = async (req, res) => {
     const isExist = await UserService.findUserByEmail(req.body.correo);
     if (isExist) {
@@ -59,6 +62,36 @@ exports.getUser = async (req, res) => {
         tipo: user.tipo,
         message: 'Logrado.'
     });
+}
+
+exports.getUserById = async (req, res) => {
+    try {
+        const user = await UserService.findUserById(req.params.id);
+        return res.json(user);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getMercado = async (req, res) => {
+    try {
+        const user = await UserService.findMercadoById(req.params.id);
+        return res.json(user);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getConsumidor = async (req, res) => {
+    try {
+        const user = await UserService.findConsumidorById(req.params.id);
+        return res.json(user);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
 }
 
 exports.logout = async (req, res) => {

@@ -26,7 +26,7 @@
                 </div>
                 <div class="user">
                     <div class="userText">
-                        <h1>Wallart <span class="dropdown-arrow">▼</span></h1>
+                        <h1></h1>
                         <ul>
                             <li><a href="reportes.html">Generar reportes</a></li>
                             <li><button onclick="cerrarSesion()">Cerrar sesión</button></li>
@@ -39,32 +39,12 @@
             <section class="main-container">
                 <div class="principal">
                     <div class="grid-row-wrapper">
-                        <h1>Productos</h1>
+                        <h1 class="titulo">Productos</h1>
                         <h1 class="relleno"></h1>
                         <div class="button-agregar">
                             <button onclick="location.href='agregar_producto.html'">Agregar</button>
                         </div>
                     </div>
-                    <!-- <div class="box">
-                        <div class="text">
-                            <h3>Nutricileche</h3>
-                        </div>
-                        <div class="img">
-                            <img src="../utils/images/lulu.jpeg" alt="">
-                        </div>
-                        <div class="text">
-                            <h2>$60</h2>
-                            <p>NOTAS</p>
-                        </div>
-                        <div class="button-group">
-                            <div class="button-actualizar">
-                                <button onclick="location.href='agregar_producto.html'">Actualizar</button>
-                            </div>
-                            <div class="button-eliminar">
-                                <button>Eliminar</button>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <footer>
                     <p>Desarrollado por equipo ProFeCo</p>
@@ -72,9 +52,11 @@
             </section>
         </main>
     </div>
+    <script src='../sistemaUsuarios/services/verificar.service.js'></script>
     <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
-    <script src='../sistemaUsuarios/services/verificar.service.js' ruta="productos_empresa.html"></script>
+    <script src='./scripts.views/productos_empresa.script.js'></script>
     <script src='./scripts.views/alerta.js'></script>
+    <script src='./scripts.views/deleteAlert.js'></script>
 </body>
 
 </html>

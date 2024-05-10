@@ -28,7 +28,7 @@
                     <div class="userText">
                         <h1>Esteban Durán <span class="dropdown-arrow">▼</span></h1>
                         <ul>
-                            <li><a href="index.html">Cerrar sesión</a></li>
+                            <li><button onclick="cerrarSesion()">Cerrar sesión</button></li>
                         </ul>
                     </div>
                 </div>
@@ -37,158 +37,35 @@
         <main>
             <section class="main-container">
                 <div class="principal">
-                    <div class="grid-row-wrapper">
-                        <h1>Según tus búsquedas recientes</h1>
-                    </div>
-                    <div class="scrollmenu-container">
-                        <div class="scrollmenu">
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
+                    <div class="products-container">
+                        <div class="grid-row-wrapper">
+                            <h1>Según tus búsquedas recientes</h1>
+                        </div>
+                        <div class="scrollmenu-container">
+                            <div class="scrollmenu" id="scrollmenu1">
+                                
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid-row-wrapper">
-                        <h1>Tiendas que has visto</h1>
+                    <div class="products-container">
+                        <div class="grid-row-wrapper">
+                            <h1>Tiendas que has visto</h1>
+                        </div>
+                        <div class="scrollmenu-container">
+                            <div class="scrollmenu" id="scrollmenu2">
+                                
+                            </div>
+                        </div>
                     </div>
-                    <div class="scrollmenu-container">
-                        <div class="scrollmenu">
-                            <div class="box">
-                                <div class="text">
-                                    <h3>Nutricileche</h3>
-                                </div>
-                                <div class="img">
-                                    <img src="../utils/images/lulu.jpeg" alt="">
-                                </div>
-                                <div class="text">
-                                    <h2>$60</h2>
-                                    <p>NOTAS</p>
-                                </div>
-                                <div class="button-group">
-                                    <div class="button-ver">
-                                        <button onclick="location.href='ver_producto.html'">Ver</button>
-                                    </div>
-                                    <div class="button-agregar">
-                                        <button>Agregar a lista</button>
-                                    </div>
-                                </div>
+
+                    <div class="products-container">
+                        <div class="grid-row-wrapper">
+                            <h1>Productos interesantes</h1>
+                        </div>
+                        <div class="scrollmenu-container">
+                            <div class="scrollmenu" id="scrollmenu3">
+                                
                             </div>
                         </div>
                     </div>
@@ -200,8 +77,11 @@
             </section>
         </main>
     </div>
-    
+
     <script src='../sistemaUsuarios/services/verificar.service.js' ruta="productos_consumidor.html"></script>
+    <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
+    <script src='./scripts.views/productos_consumidor.script.js'></script>
+    <script src='./scripts.views/alerta.js'></script>
 </body>
 
 </html>

@@ -7,8 +7,8 @@ html {
     height: 100%;
 }
 
-html h1 {
-    user-select: none;
+html {
+  user-select: none;
 }
 
 .wrapper {
@@ -117,7 +117,7 @@ img {
     margin-top: 0;
 }
 
-.user ul a {
+.user ul button, .user ul a{
     line-height: 120%;
     padding: 10px 15px;
     display: block;
@@ -272,6 +272,11 @@ div.scrollmenu div.box {
     margin-right: 20px;
 }
 
+.texto-no{
+    font-size: 2vw !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
 
 @media only screen and (max-width:768px) {
     .principal {

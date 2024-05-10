@@ -14,7 +14,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
 const UserController = require('../sistemaUsuarios/controllers/user.controller');
 const ProductController = require('../sistemaProductos/controllers/product.controller');
 
@@ -28,13 +27,26 @@ const ErrorHandler = require('../utils/middleware/error.middleware');
 router.post('/register', validate(schema.register), ErrorHandler(UserController.register));
 router.post('/login', validate(schema.login), ErrorHandler(UserController.login));
 router.get('/user', AuthGuard, ErrorHandler(UserController.getUser));
+router.get('/user/:id', ErrorHandler(UserController.getUserById));
+router.get('/mercado/:id', ErrorHandler(UserController.getMercado));
+router.get('/consumidor/:id', ErrorHandler(UserController.getConsumidor));
 router.post('/logout', AuthGuard, ErrorHandler(UserController.logout));
+
 router.get('/product/:id', AuthGuard, ErrorHandler(ProductController.getProduct));
 router.get('/products', AuthGuard, ErrorHandler(ProductController.getAllProducts));
-router.post('/product', validate(schemaP.create), ErrorHandler(ProductController.create));
+router.post('/product', validate(schemaP.create), ErrorHandler(ProductController.createProduct));
+router.put('/product/:id', validate(schemaP.update), ErrorHandler(ProductController.putProduct));
+router.delete('/product/:id', ErrorHandler(ProductController.deleteProduct));
+
+router.post('/category', validate(schemaP.category), ErrorHandler(ProductController.addCategory));
+router.get('/category/:id', ErrorHandler(ProductController.getCategories));
+router.delete('/category/:id', ErrorHandler(ProductController.deleteCategories));
+
 router.post('/upload', upload.single('file'), (req, res) => {
     return ErrorHandler(ProductController.registerImg(req,res));
 });
+router.get('/img/:id', AuthGuard, ErrorHandler(ProductController.getImg));
+router.delete('/img/:id', AuthGuard, ErrorHandler(ProductController.deleteImg));
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }))
 

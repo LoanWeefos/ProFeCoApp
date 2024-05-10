@@ -4,7 +4,12 @@ module.exports = {
     create: Joi.object().keys({
         nombre: Joi.string().required(),
         precio: Joi.number().required(),
+        oferta: Joi.string().required(),
         descripcion: Joi.string().required(),
-        imagen: Joi.any
+        usuarioId: Joi.number().required()
+    }),
+    category: Joi.object().keys({
+        nombre: Joi.string().required(),
+        productoId: Joi.number().required()
     })
 }

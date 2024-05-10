@@ -18,18 +18,17 @@
         <header>
             <section class="container">
                 <div class="logo">
-                    <a href="index.html"><img src="../utils/images/logo.png"
-                            alt="Procuraduría Federal del Consumidor"></a>
+                    <img src="../utils/images/logo.png" alt="Procuraduría Federal del Consumidor"></a>
                 </div>
                 <div class="title">
                     <h1 class="title-text">ProFeCo App</h1>
                 </div>
                 <div class="user">
                     <div class="userText">
-                        <h1>Wallart <span class="dropdown-arrow">▼</span></h1>
+                        <h1><span class="dropdown-arrow">▼</span></h1>
                         <ul>
                             <li><a href="reportes.html">Generar reportes</a></li>
-                            <li><a href="index.html">Cerrar sesión</a></li>
+                            <li><button onclick="cerrarSesion()">Cerrar sesión</button></li>
                         </ul>
                     </div>
                 </div>
@@ -38,7 +37,11 @@
         <main>
             <section class="main-container">
                 <div class="principal">
-                    <h1>Agregar producto</h1>
+                    <div class="titulo-container">
+                        <h1>Agregar producto</h1>
+                        <button class="regresar"
+                            onclick="window.location.href = 'productos_empresa.html'">Regresar</button>
+                    </div>
                     <div class="input-container">
                         <div class="text-input">
                             <h2>Nombre</h2>
@@ -60,22 +63,21 @@
                         </div>
                     </div>
                     <div class="etiquetas-container">
-                        <div class="text-input">
-                            <h2>Etiquetas</h2>
-                            <input type="text" id="etiquetas" name="etiquetas">
-                        </div>
-                        <div class="etiquetas">
-                            <button>+</button>
-                        </div>
-                    </div>
-                    <div class="etiquetas-container">
                         <div class="image-input">
                             <h2>Importar Imagen</h2>
                             <input type="file" id="imagen" accept="image/*">
                         </div>
                     </div>
+                    <div class="etiquetas-container">
+                        <div class="text-input" id="etiquetas-caja">
+                            <h2>Etiquetas</h2>
+                        </div>
+                        <div class="etiquetas">
+                            <button onclick="agregarInput()" id="+">+</button>
+                        </div>
+                    </div>
                     <div class="contenedor">
-                        <button onclick="location.href='productos_empresa.html'">Agregar</button>
+                        <button type="button" onclick="crearProducto()" id="agregar">Agregar</button>
                     </div>
                 </div>
                 <footer>
@@ -84,8 +86,12 @@
             </section>
         </main>
     </div>
-    <script src='../sistemaUsuario/services/verificar.service.js' ruta="agregar_producto.html"></script>
+    <script src='../sistemaUsuarios/services/verificar.service.js' ruta="agregar_producto.html"></script>
+    <script src='../sistemaProductos/services/crearProducto.service.js'></script>
+    <script src='../sistemaProductos/services/actualizarProducto.service.js'></script>
+    <script src='./scripts.views/agregar_producto.script.js'></script>
     <script src='./scripts.views/alerta.js'></script>
+    <script src='./scripts.views/successAlert.js'></script>
     <script>
         document.getElementById('imagen').addEventListener('change', function (event) {
             const file = event.target.files[0];

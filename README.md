@@ -12,8 +12,8 @@ npx sequelize db:create
 npx sequelize db:migrate --name 20240421093316-create-usuario
 npx sequelize db:migrate --name 20240421093320-create-consumidor
 npx sequelize db:migrate --name 20240421093322-create-mercado
-npx sequelize db:migrate --name 20240421093348-create-imagen
 npx sequelize db:migrate --name 20240421093351-create-producto
+npx sequelize db:migrate --name 20240421093348-create-imagen
 npx sequelize db:migrate --name 20240507071703-create-categoria
 npx sequelize db:migrate --name 20240421093329-create-calificacion
 npx sequelize db:migrate --name 20240421093332-create-reporte

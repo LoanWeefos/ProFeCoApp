@@ -23,8 +23,24 @@ exports.findUserByEmail = (correo) => {
     })
 }
 
-exports.findUserById = (id) => {
+exports.findUserById = async (id) => {
     return Usuario.findByPk(id);
+}
+
+exports.findMercadoById = (id) => {
+    return Mercado.findOne({
+        where: {
+            usuarioId: id
+        }
+    })
+}
+
+exports.findConsumidorById = (id) => {
+    return Consumidor.findOne({
+        where: {
+            usuarioId: id
+        }
+    })
 }
 
 exports.logoutUser = (token, exp) => {

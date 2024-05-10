@@ -10,18 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Producto.belongsTo(models.Imagen, { foreignKey: 'imagenId' });
-      Producto.hasMany(models.Calificacion, { foreignKey: 'productoId' });
-      Producto.hasMany(models.Reporte, { foreignKey: 'productoId' });
-      Producto.hasMany(models.ListaDeseos, { foreignKey: 'productoId' });
-      Producto.hasMany(models.Categoria, { foreignKey: 'productoId' });
+      Producto.hasOne(models.Imagen, { foreignKey: 'productoId', onDelete: 'CASCADE' });
+      Producto.hasMany(models.Calificacion, { foreignKey: 'productoId', onDelete: 'CASCADE' });
+      Producto.hasMany(models.Reporte, { foreignKey: 'productoId', onDelete: 'CASCADE' });
+      Producto.hasMany(models.ListaDeseos, { foreignKey: 'productoId', onDelete: 'CASCADE' });
+      Producto.hasMany(models.Categoria, { foreignKey: 'productoId', onDelete: 'CASCADE' });
+      Producto.belongsTo(models.Usuario, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
     }
   }
   Producto.init({
     nombre: DataTypes.STRING,
     precio: DataTypes.DECIMAL,
+    oferta: DataTypes.STRING,
     descripcion: DataTypes.STRING,
-    imagenId: DataTypes.INTEGER
+    usuarioId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Producto',

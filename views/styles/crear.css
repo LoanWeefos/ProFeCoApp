@@ -7,8 +7,8 @@ html {
     font-weight: bold;
 }
 
-html h1 {
-    user-select: none;
+html {
+  user-select: none;
 }
 
 .wrapper {
@@ -283,6 +283,7 @@ footer {
   left: 0;
   right: 0;
   margin: auto;
+  margin-top: 10%;
 }
 
 #dialogbox:hover {

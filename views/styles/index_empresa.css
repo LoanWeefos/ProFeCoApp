@@ -7,8 +7,8 @@ html {
     font-weight: bold;
 }
 
-html h1 {
-    user-select: none;
+html {
+  user-select: none;
 }
 
 .wrapper {
@@ -273,7 +273,8 @@ footer {
     text-align: center;
     position: relative;
     height: auto;
-    max-height: 100px;
+    max-height: 150px;
+    min-height: 100px;
     bottom: 0;
     left: 0;
     right: 0;

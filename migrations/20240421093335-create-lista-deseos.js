@@ -16,6 +16,8 @@ module.exports = {
           model: 'Usuarios',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        hooks: true
       },
       productoId: {
         type: Sequelize.INTEGER,
@@ -24,6 +26,8 @@ module.exports = {
           model: 'Productos',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        hooks: true
       },
       createdAt: {
         allowNull: false,

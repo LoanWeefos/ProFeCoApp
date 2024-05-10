@@ -25,6 +25,8 @@ module.exports = {
           model: 'Productos',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        hooks: true
       },
       createdAt: {
         allowNull: false,

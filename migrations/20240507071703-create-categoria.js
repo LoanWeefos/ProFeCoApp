@@ -17,8 +17,10 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Productos',
-          key: 'id',
+          key: 'id'
         },
+        onDelete: 'CASCADE',
+        hooks: true
       },
       createdAt: {
         allowNull: false,
