@@ -26,9 +26,10 @@
                 </div>
                 <div class="user">
                     <div class="userText">
-                        <h1>Esteban Durán <span class="dropdown-arrow">▼</span></h1>
+                        <h1><span class="dropdown-arrow">▼</span></h1>
                         <ul>
-                            <li><a href="index.html">Cerrar sesión</a></li>
+                            <li><button onclick="mostrarLista()">Ver lista</button></li>
+                            <li><button onclick="cerrarSesion()">Cerrar sesión</button></li>
                         </ul>
                     </div>
                 </div>
@@ -37,43 +38,44 @@
         <main>
             <section class="main-container">
                 <div class="principal">
-                    <div class="producto-precio">
-                        <h1>Nutricileche</h1>
-                        <h1>$18.50</h1>
-                    </div>
-                    <h2>Vendido por Wallart</h2>
-                    <img src="../utils/images/lulu.jpeg" alt="producto">
-                    <p>Con 66% de leche, Nutricileche es una buena opción para acompañar tu desayuno. Disfruta de su
-                        delicioso sabor y acompaña tus alimentos favoritos. ¡A ti y a tu familia les encantará!</p>
 
-                    <div class="agregar-ver">
-                        <button class="button-agregar">Agregar a lista</button>
-                        <button class="button-ver">Ver en otras tiendas</button>
-                    </div>
-                    <div class="calificacion">
-                        <label for="comentario">
-                            <h3>¡Califícalo!</h3>
-                        </label>
-                        <div class="cc-selector">
-                            <input id="like" type="radio" name="calif" value="like" />
-                            <label class="calif-cc1 like" for="like"></label>
-                            <input id="dislike" type="radio" name="calif" value="dislike" />
-                            <label class="calif-cc2 dislike" for="dislike"></label>
-                        </div>
-                        <button class="button-enviar">Enviar</button>
-                    </div>
-                    <div class="comentario-reportar">
-                        <textarea id="comentario"></textarea>
-                        <button class="button-reportar">Reportar</button>
-                    </div>
                 </div>
+
+                <footer id="footer">
+                    <p>Desarrollado por equipo ProFeCo</p>
+                </footer>
             </section>
         </main>
+        <script src='../sistemaUsuarios/services/verificar.service.js' ruta="ver_producto.html"></script>
+        <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
+        <script src='../sistemaProductos/services/verProducto.service.js'></script>
+        <script src='../sistemaProductos/services/agregarProductoLista.service.js'></script>
+        <script src='../sistemaProductos/services/calificarProducto.service.js'></script>
+        <script src='../sistemaProductos/services/reportarProducto.service.js'></script>
+        <script src='./scripts.views/alerta.js'></script>
+        <script src='./scripts.views/lista.script.js'></script>
+        <script>
+            function mostrar() {
+                document.querySelectorAll(".reporte").forEach(element => {
+                    element.style.display = "block";
+                });
+                const boton = document.querySelector(".button-reportar");
+                boton.textContent = "Ocultar";
+                boton.onclick = ocultar;
+            }
+            function ocultar() {
+                document.querySelectorAll(".reporte").forEach(element => {
+                    element.style.display = "none";
+                    if (element.tagName.toLowerCase() === 'textarea') {
+                        element.value = '';
+                    }
+                });
+                const boton = document.querySelector(".button-reportar");
+                boton.textContent = "Reportar";
+                boton.onclick = mostrar;
+            }
+        </script>
     </div>
-
-    <footer>
-        <p>Desarrollado por equipo ProFeCo</p>
-    </footer>
 </body>
 
 </html>

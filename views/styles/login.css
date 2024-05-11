@@ -5,8 +5,8 @@ html {
     padding: 0;
 }
 
-html h1{
-    user-select: none;
+html {
+  user-select: none;
 }
 
 .wrapper {

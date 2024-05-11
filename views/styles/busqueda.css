@@ -177,18 +177,31 @@ main {
 .main-container {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
+  grid-auto-columns: 1fr;
   grid-template-rows: auto auto;
+  grid-auto-flow: row;
+  row-gap: 8%;
   grid-template-areas:
-    ". a ."
-    "b b b";
-  height: calc(100% - 100px);
+      ". a ."
+      "b b b";
+  height: 100%;
 }
 
 .principal {
   grid-area: a;
   background-color: #F9F3ED;
-  min-height: 100%;
-  height: min-content;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 3% repeat(1fr);
+  gap: 40px;
+  place-items: center;
+  padding: 0 40px 8% 40px;
+}
+
+.filtros{
+  grid-column: 1 / span 3;
+  width: 100%;
 }
 
 .grid-row-wrapper {
@@ -355,13 +368,16 @@ footer {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
   position: relative;
+  height: auto;
+  max-height: 150px;
+  min-height: 100px;
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
 }
 
 /* PLANTILLA ALERTA */

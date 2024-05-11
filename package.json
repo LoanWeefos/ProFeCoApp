@@ -22,6 +22,7 @@
     "mysql2": "^3.9.6",
     "sequelize": "^6.37.3",
     "sequelize-cli": "^6.6.2",
+    "socket.io": "^4.7.5",
     "winston": "^3.13.0"
   }
 }

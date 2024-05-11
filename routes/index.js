@@ -48,6 +48,17 @@ router.post('/upload', upload.single('file'), (req, res) => {
 router.get('/img/:id', AuthGuard, ErrorHandler(ProductController.getImg));
 router.delete('/img/:id', AuthGuard, ErrorHandler(ProductController.deleteImg));
 
+router.post('/list', AuthGuard, ErrorHandler(ProductController.createList));
+router.get('/list/:id', AuthGuard, ErrorHandler(ProductController.getList));
+router.get('/lists', AuthGuard, ErrorHandler(ProductController.getAllList));
+router.delete('/list/:id', AuthGuard, ErrorHandler(ProductController.deleteFromList));
+
+router.post('/calif', AuthGuard, ErrorHandler(ProductController.createCalif));
+router.get('/calif/:id', AuthGuard, ErrorHandler(ProductController.getCalif));
+
+router.post('/report', AuthGuard, ErrorHandler(ProductController.report));
+/* router.get('/report/:id', AuthGuard, ErrorHandler(ProductController.getCalif)); */
+
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }))
 
 module.exports = router;

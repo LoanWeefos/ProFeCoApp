@@ -111,3 +111,77 @@ exports.deleteCategories = async (req, res) => {
         return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
     }
 }
+
+exports.createList = async (req, res) => {
+    try {
+        const lista = await ProductService.createList(req.body);
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getList = async (req, res) => {
+    try {
+        const lista = await ProductService.getList(req.params.id, req.user.id);
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getAllList = async (req, res) => {
+    try {
+        const lista = await ProductService.getAllList(req.user.id);
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.deleteFromList = async (req, res) => {
+    try {
+        const product = await ProductService.deleteFromList(req.user.id, req.params.id);
+        return res.json(product);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.createCalif = async (req, res) => {
+    try {
+        const liked = req.body.liked;
+        const comentario = req.body.comentario;
+        const productoId = req.body.productoId;
+        const usuarioId = req.user.id;
+        const lista = await ProductService.createCalif({ liked, comentario, productoId, usuarioId });
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getCalif = async (req, res) => {
+    try {
+        const calif = await ProductService.getCalif(req.params.id, req.user.id);
+        return res.json(calif);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.report = async (req, res) => {
+    try {
+        const lista = await ProductService.report(req.body);
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}

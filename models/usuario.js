@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Usuario.hasOne(models.Mercado, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
       Usuario.hasMany(models.ListaDeseos, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
       Usuario.hasMany(models.Producto, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
+      Usuario.hasMany(models.Calificacion, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
     }
   }
   Usuario.init({

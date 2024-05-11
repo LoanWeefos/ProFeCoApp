@@ -7,8 +7,8 @@ function crearProducto() {
 
     const formData = new FormData();
     formData.append('file', imagen);
-    
-    if(!imagen){
+
+    if (!imagen) {
         customAlert.alert("Falta imagen", 'Error!');
         return;
     }
@@ -62,7 +62,6 @@ function crearProducto() {
                 })
                 .then(data => {
                     const productoId = data.id
-                    const nombre = data.nombre
                     asignarEtiquetas(productoId);
                     formData.append('productoId', productoId);
                     fetch('http://localhost:8080/api/upload', {
@@ -82,7 +81,10 @@ function crearProducto() {
                             throw new Error('Error en la solicitud');
                         }
                     }).then(data => {
-                        localStorage.setItem('success', nombre);
+                        var socket = io('http://localhost:3000');
+                        socket.emit('upload', { productoId, nombre }, (product) => {
+                            customAlert.alert("Producto " + product.nombre + " creado correctamente", 'Logrado', "productos_empresa.html");
+                        });
                     })
                 })
                 .catch(error => {

@@ -7,8 +7,8 @@ html {
     height: 100%;
 }
 
-html h1 {
-    user-select: none;
+html {
+  user-select: none;
 }
 
 .wrapper {

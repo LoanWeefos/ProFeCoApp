@@ -143,6 +143,7 @@ img {
     grid-auto-columns: 1fr;
     grid-template-rows: auto auto;
     grid-auto-flow: row;
+    row-gap: 4%;
     grid-template-areas:
         ". a ."
         "b b b";

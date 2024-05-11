@@ -3,9 +3,9 @@ body {
     min-height: 100vh;
 }
 
-html h1{
+html {
     user-select: none;
-}
+  }
 
 main {
     flex: 1;

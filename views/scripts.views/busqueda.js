@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    cargarProductos();
+    cargarResultados();
 });
 
-function cargarProductos() {
+function cargarResultados() {
+    const h1Element = document.querySelector('.filtros h1');
+    h1Element.textContent = "Resultados de búsqueda de " + '"' + "BUSQUEDA" + '"';
     const token = sessionStorage.getItem('token');
     fetch('http://localhost:8080/api/products', {
         method: 'GET',
@@ -29,22 +31,25 @@ function cargarProductos() {
             const contenedor = document.querySelector('.principal');
 
             if (data.length === 0) {
+                contenedor.innerHTML = '';
                 var divNoProductos = document.createElement('div');
                 divNoProductos.classList.add('no-productos');
                 var h1NoProductos = document.createElement('h1');
-                h1NoProductos.textContent = 'No hay productos';
+                h1NoProductos.classList.add('texto-no');
+                h1NoProductos.textContent = 'No hay productos que coinicidan...';
                 divNoProductos.appendChild(h1NoProductos);
-                divNoProductos.style.gridColumnStart = '1';
-                divNoProductos.style.gridColumnEnd = 'span 3';
-                divNoProductos.style.alignSelf = 'start';
 
                 contenedor.appendChild(divNoProductos);
                 const elemento = document.querySelector('.main-container');
-
                 elemento.style.gridTemplateRows = '100% auto';
+
+                const principal = document.querySelector('.principal');
+                principal.style.gridTemplateRows = '1fr';
+                principal.style.gridTemplateColumns = '1fr';
             }
 
             data.forEach(producto => {
+
                 const divProducto = document.createElement('div');
                 divProducto.classList.add('box');
 
@@ -81,9 +86,9 @@ function cargarProductos() {
                     })
                     .then(data => {
                         img.src = "../" + data.path
+                        img.alt = data.filename;
                     })
 
-                img.alt = producto.imagenId;
                 divImagen.appendChild(img);
 
                 const divPrecioOfertas = document.createElement('div');
@@ -99,31 +104,64 @@ function cargarProductos() {
 
                 const divBotones = document.createElement('div');
                 divBotones.classList.add('button-group');
-                const divBotonActualizar = document.createElement('div');
-                divBotonActualizar.classList.add('button-actualizar');
-                const botonActualizar = document.createElement('button');
-                botonActualizar.textContent = 'Actualizar';
-                botonActualizar.onclick = function () {
-                    actualizar(producto.id);
+                const divBotonVer = document.createElement('div');
+                divBotonVer.classList.add('button-ver');
+                const botonVer = document.createElement('button');
+                botonVer.textContent = 'Ver';
+                botonVer.onclick = function () {
+                    verProducto(producto.id);
                 };
-                divBotonActualizar.appendChild(botonActualizar);
-                const divBotonEliminar = document.createElement('div');
-                divBotonEliminar.classList.add('button-eliminar');
-                const botonEliminar = document.createElement('button');
-                botonEliminar.textContent = 'Eliminar';
-                botonEliminar.onclick = function () {
-                    eliminar(producto.id);
+                divBotonVer.appendChild(botonVer);
+                const divBotonAgregar = document.createElement('div');
+                divBotonAgregar.classList.add('button-agregar');
+                const botonAgregar = document.createElement('button');
+                botonAgregar.textContent = 'Agregar';
+
+                let id = producto.id;
+                let nombre = producto.nombre;
+
+                botonAgregar.onclick = function () {
+                    agregarProductoLista(id, nombre);
                 };
-                divBotonEliminar.appendChild(botonEliminar);
-                divBotones.appendChild(divBotonActualizar);
-                divBotones.appendChild(divBotonEliminar);
+                divBotonAgregar.appendChild(botonAgregar);
+                divBotones.appendChild(divBotonVer);
+                divBotones.appendChild(divBotonAgregar);
 
                 divProducto.appendChild(divNombre);
                 divProducto.appendChild(divImagen);
                 divProducto.appendChild(divPrecioOfertas);
                 divProducto.appendChild(divBotones);
 
-                contenedor.appendChild(divProducto);
+                document.querySelector(".principal").appendChild(divProducto);
+
+                fetch('http://localhost:8080/api/list/' + producto.id, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else if (response.status === 400) {
+                            return response.json().then(data => {
+                                const errorMessage = data.message;
+                                throw new Error(errorMessage);
+                            });
+                        } else if (response.status === 500) {
+                            throw new Error('Fallo interno del servidor');
+                        } else {
+                            throw new Error('Error en la solicitud');
+                        }
+                    })
+                    .then(data => {
+                        if (data) {
+                            botonAgregar.classList.remove('button-agregar');
+                            botonAgregar.classList.add('button-no');
+                            botonAgregar.disabled = true;
+                        }
+                    })
             });
         })
         .catch(error => {
@@ -134,34 +172,8 @@ function cargarProductos() {
         });
 }
 
-function eliminar(productoId) {
-    fetch('http://localhost:8080/api/product/' + productoId, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 400) {
-                return response.json().then(data => {
-                    const errorMessage = data.message;
-                    throw new Error(errorMessage);
-                });
-            } else if (response.status === 500) {
-                throw new Error('Fallo interno del servidor');
-            } else {
-                throw new Error('Error en la solicitud');
-            }
-        })
-        .then(data => {
-            customAlert.alert("Producto " + data.nombre + " eliminado correctamente", 'Logrado', "productos_empresa.html");
-        });
-}
-
-function actualizar(productoId) {
-    const url = `agregar_producto.html?id=${productoId}`;
+function verProducto(productoId) {
+    const url = `ver_producto.html?id=${productoId}`;
 
     window.location.href = url;
 }

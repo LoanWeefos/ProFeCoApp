@@ -27,6 +27,7 @@ function cargarProductos() {
         })
         .then(data => {
             const contenedor = document.querySelector('.principal');
+            const ocultos = document.querySelectorAll('.oculto');
 
             if (data.length === 0) {
                 contenedor.innerHTML = '';
@@ -65,125 +66,132 @@ function cargarProductos() {
                         }
                     })
                     .then(data => {
+                        const randomNumber = Math.floor(Math.random() * 3) + 1;
 
-                        fetch('http://localhost:8080/api/mercado/' + data.id, {
+                        let scroll;
+                        if (randomNumber === 3) {
+                            scroll = document.querySelector('#scrollmenu3');
+                            ocultos[2].style.display = 'none'
+                        } else if (randomNumber === 2) {
+                            scroll = document.querySelector('#scrollmenu2');
+                            ocultos[1].style.display = 'none'
+                        } else {
+                            scroll = document.querySelector('#scrollmenu1');
+                            ocultos[0].style.display = 'none'
+                        }
+                        const divProducto = document.createElement('div');
+                        divProducto.classList.add('box');
+
+                        const divNombre = document.createElement('div');
+                        divNombre.classList.add('text');
+                        const h3Nombre = document.createElement('h3');
+                        h3Nombre.textContent = producto.nombre;
+                        divNombre.appendChild(h3Nombre);
+
+                        const divImagen = document.createElement('div');
+                        divImagen.classList.add('img');
+                        const img = document.createElement('img');
+
+                        fetch('http://localhost:8080/api/img/' + producto.id, {
                             method: 'GET',
                             headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        }).then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else if (response.status === 400) {
-                                return response.json().then(data => {
-                                    const errorMessage = data.message;
-                                    throw new Error(errorMessage);
-                                });
-                            } else if (response.status === 500) {
-                                throw new Error('Fallo interno del servidor');
-                            } else {
-                                throw new Error('Error en la solicitud');
-                            }
-                        }).then(data => {
-
-                            let scroll;
-                            if (data.tipo === 'supermercado') {
-                                scroll = document.querySelector('#scrollmenu3');
-                            } else if (data.tipo === 'mercado-popular') {
-                                scroll = document.querySelector('#scrollmenu2');
-                            } else {
-                                scroll = document.querySelector('#scrollmenu1');
-                            }
-                            const divProducto = document.createElement('div');
-                            divProducto.classList.add('box');
-
-                            const divNombre = document.createElement('div');
-                            divNombre.classList.add('text');
-                            const h3Nombre = document.createElement('h3');
-                            h3Nombre.textContent = producto.nombre;
-                            divNombre.appendChild(h3Nombre);
-
-                            const divImagen = document.createElement('div');
-                            divImagen.classList.add('img');
-                            const img = document.createElement('img');
-
-                            fetch('http://localhost:8080/api/img/' + producto.id, {
-                                method: 'GET',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token}`
-                                },
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else if (response.status === 400) {
+                                    return response.json().then(data => {
+                                        const errorMessage = data.message;
+                                        throw new Error(errorMessage);
+                                    });
+                                } else if (response.status === 500) {
+                                    throw new Error('Fallo interno del servidor');
+                                } else {
+                                    throw new Error('Error en la solicitud');
+                                }
                             })
-                                .then(response => {
-                                    if (response.ok) {
-                                        return response.json();
-                                    } else if (response.status === 400) {
-                                        return response.json().then(data => {
-                                            const errorMessage = data.message;
-                                            throw new Error(errorMessage);
-                                        });
-                                    } else if (response.status === 500) {
-                                        throw new Error('Fallo interno del servidor');
-                                    } else {
-                                        throw new Error('Error en la solicitud');
-                                    }
-                                })
-                                .then(data => {
-                                    img.src = "../" + data.path
-                                })
+                            .then(data => {
+                                img.src = "../" + data.path
+                                img.alt = data.filename;
+                            })
 
-                            img.alt = producto.imagenId;
-                            divImagen.appendChild(img);
+                        divImagen.appendChild(img);
 
-                            const divPrecioOfertas = document.createElement('div');
-                            divPrecioOfertas.classList.add('text');
-                            const h2Precio = document.createElement('h2');
-                            h2Precio.id = 'precio';
-                            h2Precio.textContent = `$${producto.precio}`;
-                            const pOfertas = document.createElement('p');
-                            pOfertas.id = 'ofertas';
-                            pOfertas.textContent = producto.oferta;
-                            divPrecioOfertas.appendChild(h2Precio);
-                            divPrecioOfertas.appendChild(pOfertas);
+                        const divPrecioOfertas = document.createElement('div');
+                        divPrecioOfertas.classList.add('text');
+                        const h2Precio = document.createElement('h2');
+                        h2Precio.id = 'precio';
+                        h2Precio.textContent = `$${producto.precio}`;
+                        const pOfertas = document.createElement('p');
+                        pOfertas.id = 'ofertas';
+                        pOfertas.textContent = producto.oferta;
+                        divPrecioOfertas.appendChild(h2Precio);
+                        divPrecioOfertas.appendChild(pOfertas);
 
-                            const divBotones = document.createElement('div');
-                            divBotones.classList.add('button-group');
-                            const divBotonActualizar = document.createElement('div');
-                            divBotonActualizar.classList.add('button-ver');
-                            const botonActualizar = document.createElement('button');
-                            botonActualizar.textContent = 'Actualizar';
-                            botonActualizar.onclick = function () {
-                                actualizar(producto.id);
-                            };
-                            divBotonActualizar.appendChild(botonActualizar);
-                            const divBotonEliminar = document.createElement('div');
-                            divBotonEliminar.classList.add('button-agregar');
-                            const botonEliminar = document.createElement('button');
-                            botonEliminar.textContent = 'Eliminar';
-                            botonEliminar.onclick = function () {
-                                eliminar(producto.id);
-                            };
-                            divBotonEliminar.appendChild(botonEliminar);
-                            divBotones.appendChild(divBotonActualizar);
-                            divBotones.appendChild(divBotonEliminar);
+                        const divBotones = document.createElement('div');
+                        divBotones.classList.add('button-group');
+                        const divBotonVer = document.createElement('div');
+                        divBotonVer.classList.add('button-ver');
+                        const botonVer = document.createElement('button');
+                        botonVer.textContent = 'Ver';
+                        botonVer.onclick = function () {
+                            verProducto(producto.id);
+                        };
+                        divBotonVer.appendChild(botonVer);
+                        const divBotonAgregar = document.createElement('div');
+                        divBotonAgregar.classList.add('button-agregar');
+                        const botonAgregar = document.createElement('button');
+                        botonAgregar.textContent = 'Agregar';
 
-                            divProducto.appendChild(divNombre);
-                            divProducto.appendChild(divImagen);
-                            divProducto.appendChild(divPrecioOfertas);
-                            divProducto.appendChild(divBotones);
+                        let id = producto.id;
+                        let nombre = producto.nombre;
 
-                            scroll.appendChild(divProducto);
-                        });
+                        botonAgregar.onclick = function () {
+                            agregarProductoLista(id, nombre);
+                        };
+                        divBotonAgregar.appendChild(botonAgregar);
+                        divBotones.appendChild(divBotonVer);
+                        divBotones.appendChild(divBotonAgregar);
+
+                        divProducto.appendChild(divNombre);
+                        divProducto.appendChild(divImagen);
+                        divProducto.appendChild(divPrecioOfertas);
+                        divProducto.appendChild(divBotones);
+
+                        scroll.appendChild(divProducto);
+
+                        fetch('http://localhost:8080/api/list/' + producto.id, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else if (response.status === 400) {
+                                    return response.json().then(data => {
+                                        const errorMessage = data.message;
+                                        throw new Error(errorMessage);
+                                    });
+                                } else if (response.status === 500) {
+                                    throw new Error('Fallo interno del servidor');
+                                } else {
+                                    throw new Error('Error en la solicitud');
+                                }
+                            })
+                            .then(data => {
+                                if (data) {
+                                    botonAgregar.classList.remove('button-agregar');
+                                    botonAgregar.classList.add('button-no');
+                                    botonAgregar.disabled = true;
+                                }
+                            })
                     });
-                const productsContainers = document.querySelectorAll('.products-container');
-                productsContainers.forEach(container => {
-                    const scrollmenu = container.querySelector('.scrollmenu');
-
-                    if (!scrollmenu.hasChildNodes()) {
-                        container.style.display = 'none';
-                        console.log(scrollmenu);
-                    }
-                });
             });
         })
         .catch(error => {
@@ -194,34 +202,8 @@ function cargarProductos() {
         });
 }
 
-function eliminar(productoId) {
-    fetch('http://localhost:8080/api/product/' + productoId, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 400) {
-                return response.json().then(data => {
-                    const errorMessage = data.message;
-                    throw new Error(errorMessage);
-                });
-            } else if (response.status === 500) {
-                throw new Error('Fallo interno del servidor');
-            } else {
-                throw new Error('Error en la solicitud');
-            }
-        })
-        .then(data => {
-            localStorage.setItem('delete', data.nombre);
-        });
-}
-
-function actualizar(productoId) {
-    const url = `agregar_producto.html?id=${productoId}`;
+function verProducto(productoId) {
+    const url = `ver_producto.html?id=${productoId}`;
 
     window.location.href = url;
 }

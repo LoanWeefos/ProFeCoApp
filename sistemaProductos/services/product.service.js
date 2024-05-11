@@ -1,6 +1,9 @@
 const { Producto } = require('../../models');
 const { Imagen } = require('../../models');
 const { Categoria } = require('../../models');
+const { ListaDeseos } = require('../../models');
+const { Calificacion } = require('../../models');
+const { Reporte } = require('../../models');
 
 exports.getProduct = (productId) => {
     return Producto.findByPk(productId);
@@ -110,4 +113,51 @@ exports.deleteCategories = async (productId) => {
     } catch (error) {
         throw new Error('Error al eliminar las categorías asociadas al producto.');
     }
+}
+
+exports.createList = (productList) => {
+    return ListaDeseos.create(productList);
+}
+
+exports.getList = (productoId, usuarioId) => {
+    return ListaDeseos.findOne({
+        where: {
+            usuarioId: usuarioId,
+            productoId: productoId
+        }
+    });
+}
+
+exports.getAllList = (usuarioId) => {
+    return ListaDeseos.findAll({
+        where: {
+            usuarioId: usuarioId
+        }
+    });
+}
+
+exports.deleteFromList = (usuarioId, productoId) => {
+    return ListaDeseos.destroy({
+        where: {
+            usuarioId: usuarioId,
+            productoId: productoId
+        }
+    });
+}
+
+exports.createCalif = (calif) => {
+    return Calificacion.create(calif);
+}
+
+exports.getCalif = (productoId, usuarioId) => {
+    return Calificacion.findOne({
+        where: {
+            usuarioId: usuarioId,
+            productoId: productoId
+        }
+    });
+}
+
+exports.report = (reporte) => {
+    return Reporte.create(reporte);
 }

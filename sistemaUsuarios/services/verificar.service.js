@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const token = sessionStorage.getItem('token');
     let ruta = window.location.pathname;
-    ruta = ruta.replace('/views/', '');
+    ruta = ruta.replace(/.*\/views\//, '');
 
     const rutasAdmin = ["sistema_sanciones.html", "tratar_inconsistencias.html"];
-    const rutasConsumidor = ["productos_consumidor.html", "ver_producto.html"];
+    const rutasConsumidor = ["productos_consumidor.html", "ver_producto.html", "resultados.html"];
     const rutasMercado = ["productos_empresa.html", "reportes.html", "agregar_producto.html"];
 
     if (!token) {
@@ -67,6 +67,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Error en la solicitud');
             }
         }).then(data => {
+            switch (tipo) {
+                case "CONSUMIDOR":
+                    if (rutasAdmin.includes(ruta) || rutasMercado.includes(ruta) || ruta === "index.html") {
+                        window.location.href = 'productos_consumidor.html';
+                    }
+                    break;
+                case "MERCADO":
+                    if (rutasAdmin.includes(ruta) || rutasConsumidor.includes(ruta) || ruta === "index.html") {
+                        window.location.href = 'productos_empresa.html';
+                    }
+                    break;
+                case "ADMIN":
+                    if (rutasMercado.includes(ruta) || rutasConsumidor.includes(ruta) || ruta === "index.html") {
+                        if(ruta !== "ver_producto.html"){
+                            window.location.href = 'sistema_sanciones.html';
+                        }
+                    }
+                    break;
+                default:
+                    window.location.href = 'index.html';
+            }
+
             const h1Element = document.querySelector('.userText h1');
             if (data.apellido_paterno) {
                 h1Element.textContent = data.nombre + " " + data.apellido_paterno;
@@ -81,29 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
             spanElement.textContent = '▼';
 
             h1Element.appendChild(spanElement);
-
-            switch (tipo) {
-                case "CONSUMIDOR":
-                    if (rutasAdmin.includes(ruta) || rutasMercado.includes(ruta) || ruta === "index.html") {
-                        window.location.href = 'productos_consumidor.html';
-                    }
-                    break;
-                case "MERCADO":
-                    if (rutasAdmin.includes(ruta) || rutasConsumidor.includes(ruta) || ruta === "index.html") {
-                        window.location.href = 'productos_empresa.html';
-                    }
-                    break;
-                case "ADMIN":
-                    if (rutasMercado.includes(ruta) || rutasConsumidor.includes(ruta) || ruta === "index.html") {
-                        window.location.href = 'sistema_sanciones.html';
-                    }
-                    break;
-                default:
-                    window.location.href = 'index.html';
-            }
         })
     })
         .catch(error => {
             sessionStorage.removeItem('token');
+            customAlert.alert(error, 'Error!', 'index.html');
         });
 });

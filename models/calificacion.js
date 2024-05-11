@@ -11,15 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Calificacion.belongsTo(models.Producto, { foreignKey: 'productoId', onDelete: 'CASCADE' });
+      Calificacion.belongsTo(models.Usuario, { foreignKey: 'usuarioId', onDelete: 'CASCADE' });
     }
   }
   Calificacion.init({
     liked: DataTypes.BOOLEAN,
     comentario: DataTypes.STRING,
-    productoId: DataTypes.INTEGER
+    productoId: DataTypes.INTEGER,
+    usuarioId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Calificacion',
+    tableName: 'calificaciones'
   });
   return Calificacion;
 };

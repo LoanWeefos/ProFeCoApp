@@ -6,7 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>ProFeCo App</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='./styles/index_consumidor.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./styles/busqueda.css'>
     <link href='../utils/images/favicon.png' rel='icon'>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
@@ -44,47 +44,20 @@
         <main>
             <section class="main-container">
                 <div class="principal">
-                    <div class="products-container">
-                        <div class="grid-row-wrapper">
-                            <h1>Según tus búsquedas recientes</h1>
-                        </div>
-                        <div class="grid-row-wrapper oculto">
-                            <h1>No hay</h1>
-                        </div>
-                        <div class="scrollmenu-container">
-                            <div class="scrollmenu" id="scrollmenu1">
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="products-container">
-                        <div class="grid-row-wrapper">
-                            <h1>Tiendas que has visto</h1>
-                        </div>
-                        <div class="grid-row-wrapper oculto">
-                            <h1>No hay</h1>
-                        </div>
-                        <div class="scrollmenu-container">
-                            <div class="scrollmenu" id="scrollmenu2">
-
-                            </div>
+                    <div class="filtros">
+                        <h1></h1>
+                        <h2>Filtros:</h2>
+                        <div class="filtros-cont">
+                            <label>Ofertas</label>
+                            <input type="checkbox" class="ofertas">
+                            <select id="tipo-negocio" name="tipo-negocio">
+                                <option value="mercado-popular">Mercado popular</option>
+                                <option value="supermercado">Supermercado</option>
+                                <option value="mercado-sobre-ruedas">Mercado sobre ruedas</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="products-container">
-                        <div class="grid-row-wrapper">
-                            <h1>Productos interesantes</h1>
-                        </div>
-                        <div class="grid-row-wrapper oculto">
-                            <h1>No hay</h1>
-                        </div>
-                        <div class="scrollmenu-container">
-                            <div class="scrollmenu" id="scrollmenu3">
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <footer>
@@ -94,11 +67,10 @@
         </main>
     </div>
 
-    <script src='../sistemaUsuarios/services/verificar.service.js' ruta="productos_consumidor.html"></script>
+    <script src='../sistemaUsuarios/services/verificar.service.js' ruta="resultados.html"></script>
     <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
-    <script src='../sistemaProductos/services/cargarProducto.service.js'></script>
     <script src='../sistemaProductos/services/agregarProductoLista.service.js'></script>
-    <script src='./scripts.views/productos_consumidor.script.js'></script>
+    <script src='./scripts.views/busqueda.js'></script>
     <script src='./scripts.views/alerta.js'></script>
     <script src='./scripts.views/lista.script.js'></script>
     <script src='https://cdn.socket.io/4.7.5/socket.io.min.js'></script>
@@ -115,7 +87,7 @@
 
         searchButton.addEventListener('click', () => {
             const busqueda = searchInput.value;
-            window.location.href = 'resultados.html'
+            console.log(busqueda);
         });
 
         searchInput.addEventListener('keypress', (event) => {

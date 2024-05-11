@@ -101,7 +101,7 @@ function actualizar(productoId) {
                                     throw new Error('Error en la solicitud');
                                 }
                             }).then(data => {
-                                localStorage.setItem('successUpdate', nombre);
+                                customAlert.alert("Producto " + data.nombre + " creado correctamente", 'Logrado', "productos_empresa.html");
                             })
                         })
                     } else {
