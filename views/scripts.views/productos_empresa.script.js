@@ -51,6 +51,7 @@ function cargarProductos() {
                 const divNombre = document.createElement('div');
                 divNombre.classList.add('text');
                 const h3Nombre = document.createElement('h3');
+                h3Nombre.id = "nombre";
                 h3Nombre.textContent = producto.nombre;
                 divNombre.appendChild(h3Nombre);
 
@@ -81,9 +82,9 @@ function cargarProductos() {
                     })
                     .then(data => {
                         img.src = "../" + data.path
+                        img.alt = data.filename;
                     })
 
-                img.alt = producto.imagenId;
                 divImagen.appendChild(img);
 
                 const divPrecioOfertas = document.createElement('div');
@@ -129,8 +130,11 @@ function cargarProductos() {
         .catch(error => {
             if (error instanceof TypeError && error.message === "Failed to fetch") {
                 error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            } else {
+                customAlert.alert(error, 'Error!');
             }
-            customAlert.alert(error, 'Error!');
         });
 }
 
@@ -156,7 +160,11 @@ function eliminar(productoId) {
             }
         })
         .then(data => {
-            customAlert.alert("Producto " + data.nombre + " eliminado correctamente", 'Logrado', "productos_empresa.html");
+            const nombre = data.nombre
+            var socket = io('http://localhost:3000');
+            socket.emit('delete', { productoId, nombre }, (product) => {
+                customAlert.alert("Producto " + product.nombre + " eliminado correctamente", 'Logrado', "productos_empresa.html");
+            });
         });
 }
 

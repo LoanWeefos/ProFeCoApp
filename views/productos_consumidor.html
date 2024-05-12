@@ -25,7 +25,8 @@
                     <h1 class="title-text">ProFeCo App</h1>
                 </div>
                 <div class="search-container">
-                    <input type="text" placeholder="Buscar..." class="search-input" id="search-input">
+                    <input type="text" placeholder="Busca por producto, servicio o categoría..." class="search-input"
+                        id="search-input">
                     <button type="submit" class="search-button" id="search-button">
                         <img src="../utils/images/search.png" alt="Icono de búsqueda">
                     </button>
@@ -97,6 +98,8 @@
     <script src='../sistemaUsuarios/services/verificar.service.js' ruta="productos_consumidor.html"></script>
     <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
     <script src='../sistemaProductos/services/cargarProducto.service.js'></script>
+    <script src='../sistemaProductos/services/eliminarProducto.service.js'></script>
+    <script src='../sistemaProductos/services/actualizarProductoConsumidor.service.js'></script>
     <script src='../sistemaProductos/services/agregarProductoLista.service.js'></script>
     <script src='./scripts.views/productos_consumidor.script.js'></script>
     <script src='./scripts.views/alerta.js'></script>
@@ -108,21 +111,46 @@
         socket.on('load-new', function (msg) {
             cargarProducto(msg.productoId);
         });
+        socket.on('delete-product', function (msg) {
+            eliminarProducto(msg.productoId, "index");
+        });
+        socket.on('update-product', function (msg) {
+            console.log("update");
+            actualizarProducto(msg.productoId);
+        });
+        socket.on('report-product', function (msg) {
+            const box = document.getElementById(msg.productoId);
+            box.querySelector("#nombre").textContent = box.querySelector("#nombre").textContent + "⚠️";
+        });
     </script>
     <script>
         const searchInput = document.getElementById('search-input');
         const searchButton = document.getElementById('search-button');
 
         searchButton.addEventListener('click', () => {
-            const busqueda = searchInput.value;
-            window.location.href = 'resultados.html'
+            const url = `resultados.html?search=${searchInput.value}`;
+
+            if (searchInput.value !== "") {
+                window.location.href = url;
+            } else {
+                window.location.reload();
+            };
+
         });
 
         searchInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
-                const busqueda = searchInput.value;
-                console.log(busqueda);
-            }
+                const url = `resultados.html?search=${searchInput.value}`;
+
+                if (searchInput.value !== "") {
+                    console.log(searchInput);
+                    window.location.href = url;
+                } else {
+                    console.log(searchInput);
+                    window.location.reload();
+                };
+
+            };
         });
     </script>
 </body>

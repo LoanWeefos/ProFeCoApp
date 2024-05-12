@@ -25,7 +25,8 @@
                     <h1 class="title-text">ProFeCo App</h1>
                 </div>
                 <div class="search-container">
-                    <input type="text" placeholder="Buscar..." class="search-input" id="search-input">
+                    <input type="text" placeholder="Busca por producto, servicio o categoría..." class="search-input"
+                        id="search-input">
                     <button type="submit" class="search-button" id="search-button">
                         <img src="../utils/images/search.png" alt="Icono de búsqueda">
                     </button>
@@ -48,13 +49,20 @@
                         <h1></h1>
                         <h2>Filtros:</h2>
                         <div class="filtros-cont">
-                            <label>Ofertas</label>
-                            <input type="checkbox" class="ofertas">
-                            <select id="tipo-negocio" name="tipo-negocio">
-                                <option value="mercado-popular">Mercado popular</option>
-                                <option value="supermercado">Supermercado</option>
-                                <option value="mercado-sobre-ruedas">Mercado sobre ruedas</option>
-                            </select>
+                            <div>
+                                <label for="ofertaCheck">Ofertas</label>
+                                <input type="checkbox" class="ofertas" id="ofertaCheck">
+                            </div>
+                            <div>
+                                <label for="tipo-negocio">Tipo de mercado:</label>
+                                <select id="tipo-negocio" name="tipo-negocio">
+                                    <option value="default">Todos</option>
+                                    <option value="mercado-popular">Mercado popular</option>
+                                    <option value="supermercado">Supermercado</option>
+                                    <option value="mercado-sobre-ruedas">Mercado sobre ruedas</option>
+                                </select>
+                            </div>
+                            <button class="regresar" onclick="window.history.back();">Regresar</button>
                         </div>
                     </div>
 
@@ -70,6 +78,9 @@
     <script src='../sistemaUsuarios/services/verificar.service.js' ruta="resultados.html"></script>
     <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
     <script src='../sistemaProductos/services/agregarProductoLista.service.js'></script>
+    <script src='../sistemaProductos/services/eliminarProducto.service.js'></script>
+    <script src='../sistemaProductos/services/actualizarProductoConsumidor.service.js'></script>
+    <script src='../sistemaProductos/services/cargarProductoResultado.service.js'></script>
     <script src='./scripts.views/busqueda.js'></script>
     <script src='./scripts.views/alerta.js'></script>
     <script src='./scripts.views/lista.script.js'></script>
@@ -78,7 +89,19 @@
         var socket = io('http://localhost:3000');
 
         socket.on('load-new', function (msg) {
-            cargarProducto(msg.productoId);
+            cargarProductoResultado(msg.productoId);
+        });
+        socket.on('delete-product', function (msg) {
+            eliminarProducto(msg.productoId, "search");
+        });
+        socket.on('update-product', function (msg) {
+            actualizarProducto(msg.productoId);
+        });
+        socket.on('report-product', function (msg) {
+            const box = document.getElementById(msg.productoId);
+            if (box) {
+                box.querySelector("#nombre").textContent = box.querySelector("#nombre").textContent + "⚠️";
+            }
         });
     </script>
     <script>
@@ -86,15 +109,27 @@
         const searchButton = document.getElementById('search-button');
 
         searchButton.addEventListener('click', () => {
-            const busqueda = searchInput.value;
-            console.log(busqueda);
+            const url = `resultados.html?search=${searchInput.value}`;
+
+            if (searchInput.value !== "") {
+                window.location.href = url;
+            } else {
+                window.location.reload();
+            };
+
         });
 
         searchInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
-                const busqueda = searchInput.value;
-                console.log(busqueda);
-            }
+                const url = `resultados.html?search=${searchInput.value}`;
+
+                if (searchInput.value !== "") {
+                    window.location.href = url;
+                } else {
+                    window.location.reload();
+                };
+
+            };
         });
     </script>
 </body>

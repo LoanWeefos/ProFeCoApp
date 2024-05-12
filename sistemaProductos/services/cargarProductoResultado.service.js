@@ -1,10 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
-    cargarProductos();
-});
+function cargarProductoResultado(productoId) {
+    let producto;
+    const url = new URL(window.location.href);
+    const busqueda = url.searchParams.get('search');
+    const oferta = document.querySelector("#ofertaCheck").checked;
 
-function cargarProductos() {
     const token = sessionStorage.getItem('token');
-    fetch('http://localhost:8080/api/products', {
+    fetch('http://localhost:8080/api/product/' + productoId, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -26,83 +27,74 @@ function cargarProductos() {
             }
         })
         .then(data => {
-            const contenedor = document.querySelector('.principal');
-            const ocultos = document.querySelectorAll('.oculto');
+            producto = data;
+        });
 
-            if (data.length === 0) {
-                contenedor.innerHTML = '';
-                var divNoProductos = document.createElement('div');
-                divNoProductos.classList.add('no-productos');
-                var h1NoProductos = document.createElement('h1');
-                h1NoProductos.classList.add('texto-no');
-                h1NoProductos.textContent = 'No hay productos en ninguna tienda';
-                divNoProductos.appendChild(h1NoProductos);
 
-                contenedor.appendChild(divNoProductos);
-                const elemento = document.querySelector('.main-container');
+    let tipo = document.querySelector("#tipo-negocio").value;
 
-                elemento.style.gridTemplateRows = '100% auto';
+    if (document.querySelector(".no-productos")) {
+        document.querySelector(".no-productos").remove();
+    }
+
+    const h1Element = document.querySelector('.filtros h1');
+    h1Element.textContent = "Resultados de búsqueda de " + '"' + busqueda + '"';
+    fetch('http://localhost:8080/api/products/' + busqueda, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status === 400) {
+                return response.json().then(data => {
+                    const errorMessage = data.message;
+                    throw new Error(errorMessage);
+                });
+            } else if (response.status === 500) {
+                throw new Error('Fallo interno del servidor');
+            } else {
+                throw new Error('Error en la solicitud');
+            }
+        })
+        .then(data => {
+            if (oferta) {
+                data = data.filter(producto => producto.oferta !== "");
             }
 
-            data.forEach(producto => {
-                fetch('http://localhost:8080/api/user/' + producto.usuarioId, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else if (response.status === 400) {
-                            return response.json().then(data => {
-                                const errorMessage = data.message;
-                                throw new Error(errorMessage);
-                            });
-                        } else if (response.status === 500) {
-                            throw new Error('Fallo interno del servidor');
-                        } else {
-                            throw new Error('Error en la solicitud');
-                        }
+            if (data.length === 0) {
+                vacio();
+            } else {
+                console.log("NO LLEGO", producto, data);
+                const elementoConMismoId = data.find(elemento => elemento.id === producto.id);
+                if (elementoConMismoId) {
+                    console.log("LLEGO", producto, data);
+                    fetch('http://localhost:8080/api/mercado/' + producto.usuarioId, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
                     })
-                    .then(data => {
-                        const randomNumber = Math.floor(Math.random() * 3) + 1;
-                        let reportes;
-
-                        fetch('http://localhost:8080/api/report/' + producto.id, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`
-                            },
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else if (response.status === 400) {
+                                return response.json().then(data => {
+                                    const errorMessage = data.message;
+                                    throw new Error(errorMessage);
+                                });
+                            } else if (response.status === 500) {
+                                throw new Error('Fallo interno del servidor');
+                            } else {
+                                throw new Error('Error en la solicitud');
+                            }
                         })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.json();
-                                } else if (response.status === 400) {
-                                    return response.json().then(data => {
-                                        const errorMessage = data.message;
-                                        throw new Error(errorMessage);
-                                    });
-                                } else if (response.status === 500) {
-                                    throw new Error('Fallo interno del servidor');
-                                } else {
-                                    throw new Error('Error en la solicitud');
-                                }
-                            })
-                            .then(data => {
-                                reportes = data;
-                                let scroll;
-                                if (randomNumber === 3) {
-                                    scroll = document.querySelector('#scrollmenu3');
-                                    ocultos[2].style.display = 'none'
-                                } else if (randomNumber === 2) {
-                                    scroll = document.querySelector('#scrollmenu2');
-                                    ocultos[1].style.display = 'none'
-                                } else {
-                                    scroll = document.querySelector('#scrollmenu1');
-                                    ocultos[0].style.display = 'none'
-                                }
+                        .then(data => {
+                            if (tipo.trim().toLowerCase() === "default" || tipo === data.tipo) {
                                 const divProducto = document.createElement('div');
                                 divProducto.classList.add('box');
                                 divProducto.id = producto.id;
@@ -110,13 +102,8 @@ function cargarProductos() {
                                 const divNombre = document.createElement('div');
                                 divNombre.classList.add('text');
                                 const h3Nombre = document.createElement('h3');
-
-                                if (reportes && reportes.length > 0 && reportes.some(reporte => reporte.estado === "PROCESO")) {
-                                    h3Nombre.textContent = producto.nombre + " ⚠️";
-                                } else {
-                                    h3Nombre.textContent = producto.nombre;
-                                }
                                 h3Nombre.id = "nombre";
+                                h3Nombre.textContent = producto.nombre;
                                 divNombre.appendChild(h3Nombre);
 
                                 const divImagen = document.createElement('div');
@@ -192,7 +179,7 @@ function cargarProductos() {
                                 divProducto.appendChild(divPrecioOfertas);
                                 divProducto.appendChild(divBotones);
 
-                                scroll.appendChild(divProducto);
+                                document.querySelector(".principal").appendChild(divProducto);
 
                                 fetch('http://localhost:8080/api/list/' + producto.id, {
                                     method: 'GET',
@@ -222,9 +209,13 @@ function cargarProductos() {
                                             botonAgregar.disabled = true;
                                         }
                                     })
-                            })
-                    });
-            });
+                            }
+                            if (document.querySelectorAll(".box").length === 0) {
+                                vacio();
+                            }
+                        });
+                }
+            }
         })
         .catch(error => {
             if (error instanceof TypeError && error.message === "Failed to fetch") {
@@ -235,10 +226,4 @@ function cargarProductos() {
                 customAlert.alert(error, 'Error!');
             }
         });
-}
-
-function verProducto(productoId) {
-    const url = `ver_producto.html?id=${productoId}`;
-
-    window.location.href = url;
 }

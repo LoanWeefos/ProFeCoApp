@@ -20,6 +20,17 @@ exports.getAllProducts = async (req, res) => {
     }
 }
 
+exports.queryProducts = async (req, res) => {
+    try {
+        const query = req.params.query;
+        const products = await ProductService.findProductsByQuery(query);
+        return res.json(products);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
 exports.createProduct = async (req, res) => {
     try {
         const product = await ProductService.createProduct(req.body);
@@ -179,6 +190,16 @@ exports.getCalif = async (req, res) => {
 exports.report = async (req, res) => {
     try {
         const lista = await ProductService.report(req.body);
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getReport = async (req, res) => {
+    try {
+        const lista = await ProductService.getReport(req.params.id);
         return res.json(lista);
     } catch (error) {
         const errorMessage = error.message;

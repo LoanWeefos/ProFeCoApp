@@ -101,18 +101,27 @@ function actualizar(productoId) {
                                     throw new Error('Error en la solicitud');
                                 }
                             }).then(data => {
-                                customAlert.alert("Producto " + data.nombre + " creado correctamente", 'Logrado', "productos_empresa.html");
+                                var socket = io('http://localhost:3000');
+                                socket.emit('update', { productoId, nombre }, (product) => {
+                                    customAlert.alert('Producto ' + product.nombre + " actualizado correctamente", '', 'productos_empresa.html');
+                                });
                             })
                         })
                     } else {
-                        customAlert.alert('Producto ' + nombre + " actualizado correctamente", '', 'productos_empresa.html');
+                        var socket = io('http://localhost:3000');
+                        socket.emit('update', { productoId, nombre }, (product) => {
+                            customAlert.alert('Producto ' + product.nombre + " actualizado correctamente", '', 'productos_empresa.html');
+                        });
                     }
                 })
                 .catch(error => {
                     if (error instanceof TypeError && error.message === "Failed to fetch") {
                         error = "Sin conexión con el servidor";
+                        sessionStorage.removeItem('token');
+                        customAlert.alert(error, 'Error!', 'index.html');
+                    } else {
+                        customAlert.alert(error, 'Error!');
                     }
-                    customAlert.alert(error, 'Error!');
                 });
         })
 }

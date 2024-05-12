@@ -32,6 +32,8 @@ function reportar(productoId) {
             }
         })
         .then(data => {
+            var socket = io('http://localhost:3000');
+            socket.emit('report', { productoId });
             customAlert.alert("Se procesará tu reporte, gracias.", "");
             ocultar();
             return;

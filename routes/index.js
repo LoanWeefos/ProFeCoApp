@@ -37,6 +37,7 @@ router.get('/products', AuthGuard, ErrorHandler(ProductController.getAllProducts
 router.post('/product', validate(schemaP.create), ErrorHandler(ProductController.createProduct));
 router.put('/product/:id', validate(schemaP.update), ErrorHandler(ProductController.putProduct));
 router.delete('/product/:id', ErrorHandler(ProductController.deleteProduct));
+router.get('/products/:query', ErrorHandler(ProductController.queryProducts));
 
 router.post('/category', validate(schemaP.category), ErrorHandler(ProductController.addCategory));
 router.get('/category/:id', ErrorHandler(ProductController.getCategories));
@@ -57,7 +58,7 @@ router.post('/calif', AuthGuard, ErrorHandler(ProductController.createCalif));
 router.get('/calif/:id', AuthGuard, ErrorHandler(ProductController.getCalif));
 
 router.post('/report', AuthGuard, ErrorHandler(ProductController.report));
-/* router.get('/report/:id', AuthGuard, ErrorHandler(ProductController.getCalif)); */
+router.get('/report/:id', AuthGuard, ErrorHandler(ProductController.getReport));
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }))
 

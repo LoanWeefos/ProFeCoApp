@@ -4,6 +4,7 @@ const { Categoria } = require('../../models');
 const { ListaDeseos } = require('../../models');
 const { Calificacion } = require('../../models');
 const { Reporte } = require('../../models');
+const { Op } = require('sequelize');
 
 exports.getProduct = (productId) => {
     return Producto.findByPk(productId);
@@ -11,6 +12,46 @@ exports.getProduct = (productId) => {
 
 exports.getAllProducts = () => {
     return Producto.findAll();
+}
+
+exports.findProductsByQuery = async (query) => {
+    try {
+        const productsByName = await Producto.findAll({
+            order: ["createdAt"],
+            where: {
+                nombre: {
+                    [Op.like]: "%" + query + "%",
+                },
+            }
+        });
+
+        const categories = await Categoria.findAll({
+            order: ["createdAt"],
+            where: {
+                nombre: {
+                    [Op.like]: "%" + query + "%",
+                },
+            }
+        });
+
+        const productIdsFromCategories = categories.map(category => category.productoId);
+
+        const productsByCategory = await Producto.findAll({
+            where: {
+                id: productIdsFromCategories
+            }
+        });
+
+        const products = [...productsByName, ...productsByCategory];
+
+        const uniqueProducts = Array.from(new Set(products.map(product => product.id))).map(id => {
+            return products.find(product => product.id === id);
+        });
+
+        return uniqueProducts;
+    } catch (error) {
+        throw new Error('Error al buscar productos', error);
+    }
 }
 
 exports.createProduct = (productData) => {
@@ -160,4 +201,12 @@ exports.getCalif = (productoId, usuarioId) => {
 
 exports.report = (reporte) => {
     return Reporte.create(reporte);
+}
+
+exports.getReport = (productoId) => {
+    return Reporte.findAll({
+        where: {
+            productoId: productoId
+        }
+    });
 }

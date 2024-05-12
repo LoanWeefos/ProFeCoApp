@@ -1,4 +1,9 @@
 function cargarProducto(productoId) {
+    if (document.querySelectorAll(".box").length === 0) {
+        window.location.reload();
+        return;
+    }
+
     const ocultos = document.querySelectorAll('.oculto');
     const token = sessionStorage.getItem('token');
     fetch(`http://localhost:8080/api/product/` + productoId, {
@@ -38,10 +43,12 @@ function cargarProducto(productoId) {
             }
             const divProducto = document.createElement('div');
             divProducto.classList.add('box');
+            divProducto.id = data.id;
 
             const divNombre = document.createElement('div');
             divNombre.classList.add('text');
             const h3Nombre = document.createElement('h3');
+            h3Nombre.id = "nombre";
             h3Nombre.textContent = data.nombre;
             divNombre.appendChild(h3Nombre);
 
@@ -72,9 +79,9 @@ function cargarProducto(productoId) {
                 })
                 .then(data => {
                     img.src = "../" + data.path
+                    img.alt = data.filename;
                 })
 
-            img.alt = data.imagenId;
             divImagen.appendChild(img);
 
             const divPrecioOfertas = document.createElement('div');

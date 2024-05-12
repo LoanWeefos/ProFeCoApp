@@ -61,10 +61,12 @@ function crearEmpresa() {
                 });
         })
         .catch(error => {
-            document.getElementById('register-button').disabled = false;
             if (error instanceof TypeError && error.message === "Failed to fetch") {
                 error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            }else{
+                customAlert.alert(error, 'Error!');
             }
-            customAlert.alert(error, 'Error!');
         });
 }

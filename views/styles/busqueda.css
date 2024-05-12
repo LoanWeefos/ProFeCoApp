@@ -182,8 +182,8 @@ main {
   grid-auto-flow: row;
   row-gap: 8%;
   grid-template-areas:
-      ". a ."
-      "b b b";
+    ". a ."
+    "b b b";
   height: 100%;
 }
 
@@ -199,7 +199,7 @@ main {
   padding: 0 40px 8% 40px;
 }
 
-.filtros{
+.filtros {
   grid-column: 1 / span 3;
   width: 100%;
 }
@@ -246,9 +246,28 @@ main {
 }
 
 .text p {
-  font-size: 1vw;
+  font-size: 1.5vw;
   line-height: 18px;
   margin: 10px 0 10px 0;
+  color: #D34F4F;
+}
+
+.regresar {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: white;
+  background-color: #09231E;
+  font-size: 2vw;
+  height: fit-content;
+  border: none;
+  width: min-content;
+  padding: 10px 2%;
+  margin: 0 0 0 auto;
+}
+
+.no-productos{
+  grid-column: 1 / span 3;
+  width: 100%;
 }
 
 .text h2 {
@@ -351,6 +370,48 @@ div.scrollmenu div.box {
   justify-content: space-between;
   margin-bottom: 2%;
   font-size: 2vw;
+}
+
+.filtros-cont{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas:
+    ". . .";
+}
+
+.filtros-cont div{
+  display: flex;
+  align-items: center;
+  gap: 10%;
+  width: 100%;
+}
+
+.filtros-cont label {
+  font-size: 1.5em;
+  display: inline-block;
+  vertical-align: bottom;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.filtros-cont input[type="checkbox"] {
+  width: 2em;
+  height: 2em;
+  padding: auto;
+  margin: 0 0 0 1%;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.filtros-cont select {
+  height: 2em;
+  width: fit-content;
+  font-size: 2vh;
+  display: inline-block;
+  margin: 0 0 0 1%;
+  vertical-align: bottom;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @media only screen and (max-width:768px) {

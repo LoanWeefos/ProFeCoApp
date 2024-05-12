@@ -31,7 +31,10 @@ function verProducto(productoId) {
         .then(data => {
             let producto = data;
             let src;
-            fetch('http://localhost:8080/api/img/' + data.id, {
+
+            let reportes;
+
+            fetch('http://localhost:8080/api/report/' + producto.id, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,28 +56,51 @@ function verProducto(productoId) {
                     }
                 })
                 .then(data => {
-                    src = "../" + data.path
-                    fetch('http://localhost:8080/api/mercado/' + producto.usuarioId, {
+                    let productos = data;
+                    fetch('http://localhost:8080/api/img/' + producto.id, {
                         method: 'GET',
                         headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else if (response.status === 400) {
-                            return response.json().then(data => {
-                                const errorMessage = data.message;
-                                throw new Error(errorMessage);
-                            });
-                        } else if (response.status === 500) {
-                            throw new Error('Fallo interno del servidor');
-                        } else {
-                            throw new Error('Error en la solicitud');
-                        }
-                    }).then(data => {
-                        const nombre = producto.nombre.toString();
-                        const productoHTML = `
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else if (response.status === 400) {
+                                return response.json().then(data => {
+                                    const errorMessage = data.message;
+                                    throw new Error(errorMessage);
+                                });
+                            } else if (response.status === 500) {
+                                throw new Error('Fallo interno del servidor');
+                            } else {
+                                throw new Error('Error en la solicitud');
+                            }
+                        })
+                        .then(data => {
+                            src = "../" + data.path
+                            fetch('http://localhost:8080/api/mercado/' + producto.usuarioId, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else if (response.status === 400) {
+                                    return response.json().then(data => {
+                                        const errorMessage = data.message;
+                                        throw new Error(errorMessage);
+                                    });
+                                } else if (response.status === 500) {
+                                    throw new Error('Fallo interno del servidor');
+                                } else {
+                                    throw new Error('Error en la solicitud');
+                                }
+                            }).then(data => {
+                                const nombre = producto.nombre.toString();
+                                const productoHTML = `
                         <div class="producto-precio">
                             <h1>${nombre}</h1>
                             <h1>$${producto.precio}</h1>
@@ -83,12 +109,15 @@ function verProducto(productoId) {
                             <h2>Vendido por ${data.nombre}</h2>
                             <button class="regresar" onclick="window.history.back();">Regresar</button>
                         </div>
+                        <div class="oculto">
+                            <h3>Este producto tiene inconsistencias reportadas ⚠️</h3>
+                        </div>
                         <img src="${src}" alt="producto">
                         <p class="desc">${producto.descripcion}</p>
 
                         <div class="agregar-ver">
                             <button class="button-agregar" onclick="agregarProductoLista(${producto.id}, '${nombre}')">Agregar a lista</button>
-                            <button class="button-ver">Ver en otras tiendas</button>
+                            <button class="button-ver" onclick="buscarProducto();">Ver en otras tiendas</button>
                         </div>
                         <div class="calificacion" id="calificacion-comentario">
                             <h3 id="calif-titulo">¡Califícalo!</h3>
@@ -108,71 +137,82 @@ function verProducto(productoId) {
                         </div>
                     `;
 
-                        const contenedor = document.querySelector('.principal');
-                        contenedor.innerHTML = productoHTML;
+                                const contenedor = document.querySelector('.principal');
+                                contenedor.innerHTML = productoHTML;
 
-                        fetch('http://localhost:8080/api/list/' + producto.id, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`
-                            },
-                        })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.json();
-                                } else if (response.status === 400) {
-                                    return response.json().then(data => {
-                                        const errorMessage = data.message;
-                                        throw new Error(errorMessage);
+                                fetch('http://localhost:8080/api/list/' + producto.id, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    },
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        } else if (response.status === 400) {
+                                            return response.json().then(data => {
+                                                const errorMessage = data.message;
+                                                throw new Error(errorMessage);
+                                            });
+                                        } else if (response.status === 500) {
+                                            throw new Error('Fallo interno del servidor');
+                                        } else {
+                                            throw new Error('Error en la solicitud');
+                                        }
+                                    })
+                                    .then(data => {
+                                        if (data) {
+                                            const botonAgregar = document.querySelector('.button-agregar');
+
+                                            botonAgregar.classList.remove('button-agregar');
+                                            botonAgregar.classList.add('button-no');
+                                            botonAgregar.disabled = true;
+                                        }
                                     });
-                                } else if (response.status === 500) {
-                                    throw new Error('Fallo interno del servidor');
-                                } else {
-                                    throw new Error('Error en la solicitud');
+
+                                fetch('http://localhost:8080/api/calif/' + producto.id, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}`
+                                    },
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        } else if (response.status === 400) {
+                                            return response.json().then(data => {
+                                                const errorMessage = data.message;
+                                                throw new Error(errorMessage);
+                                            });
+                                        } else if (response.status === 500) {
+                                            throw new Error('Fallo interno del servidor');
+                                        } else {
+                                            throw new Error('Error en la solicitud');
+                                        }
+                                    })
+                                    .then(data => {
+                                        if (data) {
+                                            document.querySelector('.cc-selector').style.display = 'none';
+                                            document.querySelector('.button-enviar').style.display = 'none';
+                                            document.querySelector('#comentario').style.display = 'none';
+                                            document.querySelector('#calif-titulo').textContent = '¡Gracias por tus comentarios!';
+                                        }
+                                    })
+
+                                if (productos && productos.length > 0 && productos.some(reporte => reporte.estado === "PROCESO")) {
+                                    document.querySelector(".oculto").style.display = "block";
                                 }
+
                             })
-                            .then(data => {
-                                if (data) {
-                                    const botonAgregar = document.querySelector('.button-agregar');
-
-                                    botonAgregar.classList.remove('button-agregar');
-                                    botonAgregar.classList.add('button-no');
-                                    botonAgregar.disabled = true;
-                                }
-                            });
-
-                        fetch('http://localhost:8080/api/calif/' + producto.id, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`
-                            },
                         })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.json();
-                                } else if (response.status === 400) {
-                                    return response.json().then(data => {
-                                        const errorMessage = data.message;
-                                        throw new Error(errorMessage);
-                                    });
-                                } else if (response.status === 500) {
-                                    throw new Error('Fallo interno del servidor');
-                                } else {
-                                    throw new Error('Error en la solicitud');
-                                }
-                            })
-                            .then(data => {
-                                if (data) {
-                                    document.querySelector('.cc-selector').style.display = 'none';
-                                    document.querySelector('.button-enviar').style.display = 'none';
-                                    document.querySelector('#comentario').style.display = 'none';
-                                    document.querySelector('#calif-titulo').textContent = '¡Gracias por tus comentarios!';
-                                }
-                            })
-
-                    })
                 })
         });
+}
+
+function buscarProducto(){
+    const producto = document.querySelector(".producto-precio h1").textContent;
+    const url = `resultados.html?search=${producto}`;
+    window.location.href = url;
 }

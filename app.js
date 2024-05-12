@@ -36,10 +36,20 @@ io.on('connection', (socket) => {
         callback(product);
         io.emit('load-new', product);
     })
-    socket.on('disconnect', () => {
-        console.log('Usuario desconectado');
-        io.emit('chat message', 'Usuario desconectado');
-    });
+    socket.on('delete', (product, callback) => {
+        console.log('mensaje:', product);
+        callback(product);
+        io.emit('delete-product', product);
+    })
+    socket.on('update', (product, callback) => {
+        console.log('mensaje:', product);
+        callback(product);
+        io.emit('update-product', product);
+    })
+    socket.on('report', (product) => {
+        console.log('mensaje:', product);
+        io.emit('report-product', product);
+    })
 });
 
 module.exports = app;
