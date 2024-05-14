@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     liked: DataTypes.BOOLEAN,
     comentario: DataTypes.STRING,
     productoId: DataTypes.INTEGER,
-    usuarioId: DataTypes.INTEGER
+    usuarioId: DataTypes.INTEGER,
+    comentario: DataTypes.STRING,
+    nombreProducto: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Calificacion',

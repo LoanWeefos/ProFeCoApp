@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>ProFeCo App</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            user-select: none;
+        }
+
+        .wrapper {
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            -ms-flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            height: 100%;
+        }
+
+        /* HEADER */
+        .container {
+            display: grid;
+            grid-template-columns: auto 2fr 1fr;
+            grid-template-rows: 100%;
+            grid-auto-columns: 1fr;
+            gap: 20px 20px;
+            grid-auto-flow: row;
+            grid-template-areas:
+                ". . .";
+            background-color: #09231E;
+        }
+
+        .logo {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5em 20px;
+        }
+
+        .logo,
+        img {
+            width: 200px;
+            display: block;
+            margin: auto;
+        }
+
+        .title {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 1.4em;
+            color: white;
+        }
+
+        .title text {
+            display: block;
+            margin: auto;
+        }
+
+        .login {
+            grid-column: 3 / 4;
+            grid-row: 1 / 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 1.4em;
+            color: #09231E;
+        }
+
+        .login button {
+            font-family: 'Montserrat', sans-serif;
+            color: whitesmoke;
+            background-color: transparent;
+            font-size: 1em;
+            margin: 0 50px;
+            width: fit-content;
+            height: fit-content;
+            border: none;
+        }
+
+        /* .searchbar {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+        /* BODY */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 4fr 1fr;
+            grid-template-rows: auto auto;
+            grid-auto-columns: 1fr;
+            grid-auto-flow: row;
+            grid-template-areas:
+                ". a ."
+                "b b b";
+            height: 100%;
+        }
+
+        .principal {
+            grid-area: a;
+            background-color: #F9F3ED;
+            height: 100%;
+        }
+
+        .main-container h1 {
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 3em;
+            margin-left: 4%;
+            margin-bottom: 70px;
+            width: fit-content;
+        }
+
+        .main-container h2 {
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 2em;
+            margin-left: 4%;
+            width: fit-content;
+        }
+
+        .select-input h2 {
+            margin-left: 0;
+        }
+
+        .main-container input[type="text"] {
+            width: calc(80% - 2 * 4%);
+            max-width: 500px;
+            padding: 10px;
+            margin-left: 4%;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 2em;
+            color: #09231E;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .contenedor {
+            width: 100%;
+            display: flex;
+            height: 100px;
+            align-items: center;
+            justify-content: center;
+            margin: 4% 0;
+        }
+
+        .main-container button {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: white;
+            background-color: #09231E;
+            font-size: 2em;
+            width: 100%;
+            max-width: 20em;
+            min-width: none;
+            height: fit-content;
+            border: none;
+            align-self: center;
+            padding: 10px 0;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .text-input,
+        .select-input {
+            flex: 1;
+            margin-right: 50px;
+        }
+
+        .select-input select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 2em;
+            color: #09231E;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* FOOTER */
+        footer {
+            grid-area: b;
+            background-color: #09231E;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            position: relative;
+            height: auto;
+            max-height: 100px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* PLANTILLA ALERTA */
+
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+        /* ---------------Animation---------------- */
+
+        .slit-in-vertical {
+            -webkit-animation: slit-in-vertical 0.45s ease-out both;
+            animation: slit-in-vertical 0.45s ease-out both;
+        }
+
+        @-webkit-keyframes slit-in-vertical {
+            0% {
+                -webkit-transform: translateZ(-800px) rotateY(90deg);
+                transform: translateZ(-800px) rotateY(90deg);
+                opacity: 0;
+            }
+
+            54% {
+                -webkit-transform: translateZ(-160px) rotateY(87deg);
+                transform: translateZ(-160px) rotateY(87deg);
+                opacity: 1;
+            }
+
+            100% {
+                -webkit-transform: translateZ(0) rotateY(0);
+                transform: translateZ(0) rotateY(0);
+            }
+        }
+
+        @keyframes slit-in-vertical {
+            0% {
+                -webkit-transform: translateZ(-800px) rotateY(90deg);
+                transform: translateZ(-800px) rotateY(90deg);
+                opacity: 0;
+            }
+
+            54% {
+                -webkit-transform: translateZ(-160px) rotateY(87deg);
+                transform: translateZ(-160px) rotateY(87deg);
+                opacity: 1;
+            }
+
+            100% {
+                -webkit-transform: translateZ(0) rotateY(0);
+                transform: translateZ(0) rotateY(0);
+            }
+        }
+
+        /*---------------#region Alert--------------- */
+
+        #dialogoverlay {
+            display: none;
+            opacity: .8;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #707070;
+            width: 100%;
+            z-index: 10;
+        }
+
+        #dialogbox {
+            display: none;
+            position: absolute;
+            background: #09231E;
+            border-radius: 7px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.575);
+            transition: 0.3s;
+            width: 40%;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            margin-top: 10%;
+        }
+
+        #dialogbox:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.911);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+
+        .pure-material-button-contained {
+            position: relative;
+            display: inline-block;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 4px;
+            padding: 0 16px;
+            min-width: 64px;
+            height: 36px;
+            vertical-align: middle;
+            text-align: center;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+            background-color: #09231E;
+            /* background-color: rgb(1, 47, 61) */
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+            font-family: var(--pure-material-font, "Roboto", "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 36px;
+            overflow: hidden;
+            outline: none;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+
+        .pure-material-button-contained::-moz-focus-inner {
+            border: none;
+        }
+
+        /* ---------------Overlay--------------- */
+
+        .pure-material-button-contained::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        /* Ripple */
+        .pure-material-button-contained::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border-radius: 50%;
+            padding: 50%;
+            width: 32px;
+            /* Safari */
+            height: 32px;
+            /* Safari */
+            background-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1);
+            transition: opacity 1s, transform 0.5s;
+        }
+
+        /* Hover, Focus */
+        .pure-material-button-contained:hover,
+        .pure-material-button-contained:focus {
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        .pure-material-button-contained:hover::before {
+            opacity: 0.08;
+        }
+
+        .pure-material-button-contained:focus::before {
+            opacity: 0.24;
+        }
+
+        .pure-material-button-contained:hover:focus::before {
+            opacity: 0.3;
+        }
+
+        /* Active */
+        .pure-material-button-contained:active {
+            box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+        }
+
+        .pure-material-button-contained:active::after {
+            opacity: 0.32;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0s;
+        }
+
+        /* Disabled */
+        .pure-material-button-contained:disabled {
+            color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.38);
+            background-color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.12);
+            box-shadow: none;
+            cursor: initial;
+        }
+
+        .pure-material-button-contained:disabled::before {
+            opacity: 0;
+        }
+
+        .pure-material-button-contained:disabled::after {
+            opacity: 0;
+        }
+
+        #dialogbox>div {
+            background: #FFF;
+            margin: 8px;
+        }
+
+        #dialogbox>div>#dialogboxhead {
+            background: #09231E;
+            font-size: 19px;
+            padding: 10px;
+            color: rgb(255, 255, 255);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #dialogbox>div>#dialogboxbody {
+            background: #F9F3ED;
+            padding: 20px;
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+        }
+
+        #dialogbox>div>#dialogboxfoot {
+            background: #F9F3ED;
+            padding: 10px;
+            text-align: right;
+        }
+
+        /*#endregion Alert*/
+    </style>
+    <link href='../utils/images/favicon.png' rel='icon'>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <section class="container">
+                <div class="title">
+                    <h1 class="title-text">ProFeCo App</h1>
+                </div>
+            </section>
+        </header>
+        <main>
+            <section class="main-container">
+                <div class="principal">
+                    <div>
+                        {{data}}
+                    </div>
+                </div>
+                <footer>
+                    <p>Desarrollado por equipo ProFeCo</p>
+                </footer>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

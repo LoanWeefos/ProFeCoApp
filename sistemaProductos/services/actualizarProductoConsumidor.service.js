@@ -11,7 +11,7 @@ function actualizarProducto(productoId) {
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -40,7 +40,7 @@ function actualizarProducto(productoId) {
                 .then(response => {
                     if (response.ok) {
                         return response.json();
-                    } else if (response.status === 400) {
+                    } else if (response.status === 400 || response.status === 401) {
                         return response.json().then(data => {
                             const errorMessage = data.message;
                             throw new Error(errorMessage);
@@ -61,5 +61,14 @@ function actualizarProducto(productoId) {
 
             const pOfertas = box.querySelector('#ofertas');
             pOfertas.textContent = data.oferta;
+        })
+        .catch(error => {
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            } else {
+                customAlert.alert(error, 'Error!');
+            }
         });
 }

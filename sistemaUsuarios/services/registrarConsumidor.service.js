@@ -19,7 +19,7 @@ function crearConsumidor() {
             if (response.ok) {
                 document.getElementById('register-button').disabled = false;
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -41,7 +41,7 @@ function crearConsumidor() {
             }).then(response => {
                 if (response.ok) {
                     return response.json();
-                } else if (response.status === 400) {
+                } else if (response.status === 400 || response.status === 401) {
                     return response.json().then(data => {
                         const errorMessage = data.message;
                         throw new Error(errorMessage);

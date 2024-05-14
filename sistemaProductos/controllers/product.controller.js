@@ -153,6 +153,20 @@ exports.getAllList = async (req, res) => {
     }
 }
 
+exports.getWishlist = async (req, res) => {
+    try {
+        const desde = req.body.desde || null;
+        const hasta = req.body.hasta || null;
+        const producto = req.body.nombreProducto || null;
+
+        const lista = await ProductService.getWishlist(req.user.id, desde, hasta, producto);
+        return JSON.stringify(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
 exports.deleteFromList = async (req, res) => {
     try {
         const product = await ProductService.deleteFromList(req.user.id, req.params.id);
@@ -169,7 +183,8 @@ exports.createCalif = async (req, res) => {
         const comentario = req.body.comentario;
         const productoId = req.body.productoId;
         const usuarioId = req.user.id;
-        const lista = await ProductService.createCalif({ liked, comentario, productoId, usuarioId });
+        const nombreProducto = req.body.nombreProducto;
+        const lista = await ProductService.createCalif({ liked, comentario, productoId, usuarioId, nombreProducto });
         return res.json(lista);
     } catch (error) {
         const errorMessage = error.message;
@@ -187,10 +202,28 @@ exports.getCalif = async (req, res) => {
     }
 }
 
+exports.getCalifMercado = async (req, res) => {
+    try {
+        const desde = req.body.desde || null;
+        const hasta = req.body.hasta || null;
+        const producto = req.body.nombreProducto || null;
+
+        const calif = await ProductService.getCalifMercado(req.user.id, desde, hasta, producto);
+        return JSON.stringify(calif);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
 exports.report = async (req, res) => {
     try {
-        const lista = await ProductService.report(req.body);
-        return res.json(lista);
+        const descripcion = req.body.descripcion;
+        const estado = req.body.estado;
+        const productoId = req.body.productoId;
+        const nombreProducto = req.body.nombreProducto;
+        const reporte = await ProductService.report({ descripcion, estado, productoId, nombreProducto });
+        return res.json(reporte);
     } catch (error) {
         const errorMessage = error.message;
         return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
@@ -201,6 +234,50 @@ exports.getReport = async (req, res) => {
     try {
         const lista = await ProductService.getReport(req.params.id);
         return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getReports = async (req, res) => {
+    try {
+        const lista = await ProductService.getReports();
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getReportsTabla = async (req, res) => {
+    try {
+        const lista = await ProductService.getReportsTabla();
+        return res.json(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.getInconsistencias = async (req, res) => {
+    try {
+        const desde = req.body.desde || null;
+        const hasta = req.body.hasta || null;
+        const producto = req.body.producto || null;
+
+        const lista = await ProductService.getInconsistencias(req.user.id, desde, hasta, producto);
+        return JSON.stringify(lista);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.updateReport = async (req, res) => {
+    try {
+        const user = await ProductService.updateReport(req.params.id, req.body.estado);
+        return res.json(user);
     } catch (error) {
         const errorMessage = error.message;
         return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });

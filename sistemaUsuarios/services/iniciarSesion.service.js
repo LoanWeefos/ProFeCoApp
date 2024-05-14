@@ -15,7 +15,7 @@ function iniciarSesion() {
             if (response.ok) {
                 document.getElementById('login-button').disabled = false;
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -37,7 +37,7 @@ function iniciarSesion() {
             }).then(response => {
                 if (response.ok) {
                     return response.json();
-                } else if (response.status === 400) {
+                } else if (response.status === 400 || response.status === 401) {
                     return response.json().then(data => {
                         const errorMessage = data.message;
                         throw new Error(errorMessage);

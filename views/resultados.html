@@ -103,6 +103,11 @@
                 box.querySelector("#nombre").textContent = box.querySelector("#nombre").textContent + "⚠️";
             }
         });
+        socket.on('sancionar', function (msg) {
+            const url = window.location.href;
+            const nuevaUrl = url.replace(/^.*\/views\//, '');
+            customAlert.alert("Un mercado fue sancionado", "", nuevaUrl);
+        });
     </script>
     <script>
         const searchInput = document.getElementById('search-input');

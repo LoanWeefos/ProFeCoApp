@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }).then(response => {
         if (response.ok) {
             return response.json();
-        } else if (response.status === 400) {
+        } else if (response.status === 400 || response.status === 401) {
             return response.json().then(data => {
                 const errorMessage = data.message;
                 throw new Error(errorMessage);
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
                 case "ADMIN":
                     if (rutasMercado.includes(ruta) || rutasConsumidor.includes(ruta) || ruta === "index.html") {
-                        if(ruta !== "ver_producto.html"){
+                        if (ruta !== "ver_producto.html") {
                             window.location.href = 'sistema_sanciones.html';
                         }
                     }
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (data.nombre) {
                 h1Element.textContent = data.nombre
             } else {
-                h1Element.textContent = "ADMIN";
+                h1Element.textContent = "ADMINISTRADOR";
             }
 
             const spanElement = document.createElement('span');

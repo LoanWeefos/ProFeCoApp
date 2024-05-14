@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const puppeteer = require('puppeteer');
 
 const storage = multer.diskStorage({
     destination: 'uploads/',
@@ -29,6 +31,7 @@ router.post('/login', validate(schema.login), ErrorHandler(UserController.login)
 router.get('/user', AuthGuard, ErrorHandler(UserController.getUser));
 router.get('/user/:id', ErrorHandler(UserController.getUserById));
 router.get('/mercado/:id', ErrorHandler(UserController.getMercado));
+router.patch('/mercado/:id', ErrorHandler(UserController.updateMercado));
 router.get('/consumidor/:id', ErrorHandler(UserController.getConsumidor));
 router.post('/logout', AuthGuard, ErrorHandler(UserController.logout));
 
@@ -44,7 +47,7 @@ router.get('/category/:id', ErrorHandler(ProductController.getCategories));
 router.delete('/category/:id', ErrorHandler(ProductController.deleteCategories));
 
 router.post('/upload', upload.single('file'), (req, res) => {
-    return ErrorHandler(ProductController.registerImg(req,res));
+    return ErrorHandler(ProductController.registerImg(req, res));
 });
 router.get('/img/:id', AuthGuard, ErrorHandler(ProductController.getImg));
 router.delete('/img/:id', AuthGuard, ErrorHandler(ProductController.deleteImg));
@@ -52,13 +55,85 @@ router.delete('/img/:id', AuthGuard, ErrorHandler(ProductController.deleteImg));
 router.post('/list', AuthGuard, ErrorHandler(ProductController.createList));
 router.get('/list/:id', AuthGuard, ErrorHandler(ProductController.getList));
 router.get('/lists', AuthGuard, ErrorHandler(ProductController.getAllList));
+router.get('/wishlist', AuthGuard, ErrorHandler(ProductController.getWishlist));
 router.delete('/list/:id', AuthGuard, ErrorHandler(ProductController.deleteFromList));
 
 router.post('/calif', AuthGuard, ErrorHandler(ProductController.createCalif));
 router.get('/calif/:id', AuthGuard, ErrorHandler(ProductController.getCalif));
+router.get('/califMercado/', AuthGuard, ErrorHandler(ProductController.getCalifMercado));
 
 router.post('/report', AuthGuard, ErrorHandler(ProductController.report));
 router.get('/report/:id', AuthGuard, ErrorHandler(ProductController.getReport));
+router.get('/reports', AuthGuard, ErrorHandler(ProductController.getReports));
+router.get('/reportesTabla', AuthGuard, ErrorHandler(ProductController.getReportsTabla));
+router.get('/inconsistencias', AuthGuard, ErrorHandler(ProductController.getInconsistencias));
+router.patch('/report/:id', ErrorHandler(ProductController.updateReport));
+
+router.post('/generateInconsistencias', AuthGuard, ErrorHandler(async (req, res) => {
+    const data = await ProductController.getInconsistencias(req, res);
+    
+    const templatePath = path.join(__dirname, '../views/template.html');
+    const templateHtml = fs.readFileSync(templatePath, 'utf8');
+
+    const replacedHtml = templateHtml
+        .replace('{{data}}', data)
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setContent(replacedHtml);
+
+    const pdfBuffer = await page.pdf({ format: 'Ledger' });
+
+    await browser.close();
+
+    res.contentType('application/pdf');
+    res.send(pdfBuffer);
+}));
+
+router.post('/generateComentarios', AuthGuard, ErrorHandler(async (req, res) => {
+    const data = await ProductController.getCalifMercado(req, res);
+    
+    const templatePath = path.join(__dirname, '../views/template.html');
+    const templateHtml = fs.readFileSync(templatePath, 'utf8');
+
+    const replacedHtml = templateHtml
+        .replace('{{data}}', data)
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setContent(replacedHtml);
+
+    const pdfBuffer = await page.pdf({ format: 'Ledger' });
+
+    await browser.close();
+
+    res.contentType('application/pdf');
+    res.send(pdfBuffer);
+}));
+
+router.post('/generateWishlist', AuthGuard, ErrorHandler(async (req, res) => {
+    const data = await ProductController.getWishlist(req, res);
+    
+    const templatePath = path.join(__dirname, '../views/template.html');
+    const templateHtml = fs.readFileSync(templatePath, 'utf8');
+
+    const replacedHtml = templateHtml
+        .replace('{{data}}', data)
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setContent(replacedHtml);
+
+    const pdfBuffer = await page.pdf({ format: 'Ledger' });
+
+    await browser.close();
+
+    res.contentType('application/pdf');
+    res.send(pdfBuffer);
+}));
 
 router.all('*', (req, res) => res.status(400).json({ message: 'Bad Request.' }))
 

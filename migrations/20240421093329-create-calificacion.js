@@ -35,6 +35,9 @@ module.exports = {
         onDelete: 'CASCADE',
         hooks: true
       },
+      nombreProducto: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

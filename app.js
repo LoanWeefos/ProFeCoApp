@@ -6,6 +6,7 @@ require('dotenv').config();
 var cors = require('cors');
 var http = require('http');
 const socketIO = require('socket.io');
+const puppeteer = require('puppeteer');
 
 const indexRouter = require('./routes/index');
 const app = express();
@@ -49,6 +50,11 @@ io.on('connection', (socket) => {
     socket.on('report', (product) => {
         console.log('mensaje:', product);
         io.emit('report-product', product);
+    })
+    socket.on('sancion', (product, callback) => {
+        console.log('mensaje:', product);
+        callback(product);
+        io.emit('sancionar', product);
     })
 });
 

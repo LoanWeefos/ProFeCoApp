@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Mercado.init({
     nombre: DataTypes.STRING,
     tipo: DataTypes.STRING,
+    estado: DataTypes.STRING,
     usuarioId: DataTypes.INTEGER
   }, {
     sequelize,

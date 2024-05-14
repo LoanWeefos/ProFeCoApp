@@ -26,7 +26,11 @@
                 </div>
                 <div class="user">
                     <div class="userText">
-                        <a href="index.html">Cerrar sesión</a>
+                        <h1><span class="dropdown-arrow">▼</span></h1>
+                        <ul>
+                            <li><button onclick="mostrarLista()">Ver lista</button></li>
+                            <li><button onclick="cerrarSesion()">Cerrar sesión</button></li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -35,74 +39,21 @@
             <section class="main-container">
                 <div class="principal">
                     <div class="contenedor">
-                        <div class="content">
+                        <div class="titulo">
                             <h1>Sistema de sanciones</h1>
+                        </div>
+                        <div class="content">
                             <button class="button-sancionar"
-                                onclick="window.location='sistema_sanciones.html';">Sancionar</button>
+                                onclick="sancionar()">SANCIONAR</button>
+                            <div class="botones">
+                                <button class="regresar" onclick="window.location.reload()">Actualizar</button>
+                                <button class="regresar" onclick="window.history.back()">Regresar</button>
+                            </div>
                         </div>
                     </div>
+                    <h1 class="oculto">NO HAY REPORTES EN ESTE MOMENTO</h1>
                     <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="nombre">
-                                        <h1>Producto</h1>
-                                    </th>
-                                    <th>
-                                        <h1>Reporte</h1>
-                                    </th>
-                                    <th>
-                                        <h1>Fecha del reporte</h1>
-                                    </th>
-                                    <th>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr onclick="window.location='ver_producto.html';">
-                                    <td class="nombre">
-                                        <h2>Wallart</h2>
-                                    </td>
-                                    <td class="reporte">
-                                        <h2>En la tienda esta a 50 pesos y en la página a 17.50</h2>
-                                    </td>
-                                    <td>
-                                        <h2>14/02/2024 12:34 AM</h2>
-                                    </td>
-                                    <td class="liberado">
-                                        <h2>Liberar</h2>
-                                    </td>
-                                </tr>
-                                <tr onclick="window.location='ver_producto.html';">
-                                    <td class="nombre">
-                                        <h2>Wallart</h2>
-                                    </td>
-                                    <td class="reporte">
-                                        <h2>En la tienda esta a 50 pesos y en la página a 17.50</h2>
-                                    </td>
-                                    <td>
-                                        <h2>14/02/2024 12:34 AM</h2>
-                                    </td>
-                                    <td class="liberado">
-                                        <h2>Liberar</h2>
-                                    </td>
-                                </tr>
-                                <tr onclick="window.location='ver_producto.html';">
-                                    <td class="nombre">
-                                        <h2>Wallart</h2>
-                                    </td>
-                                    <td class="reporte">
-                                        <h2>En la tienda esta a 50 pesos y en la página a 17.50</h2>
-                                    </td>
-                                    <td>
-                                        <h2>14/02/2024 12:34 AM</h2>
-                                    </td>
-                                    <td class="liberado">
-                                        <h2>Liberar</h2>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+
                     </div>
                 </div>
                 <footer>
@@ -111,6 +62,30 @@
             </section>
         </main>
     </div>
+
+    <script src='../sistemaUsuarios/services/verificar.service.js' ruta="sistema_sanciones.html"></script>
+    <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
+    <script src='../sistemaUsuarios/services/sancionar.service.js'></script>
+    <script src='./scripts.views/inconsistencias.script.js'></script>
+    <script src='https://cdn.socket.io/4.7.5/socket.io.min.js'></script>
+    <script src='./scripts.views/alerta.js'></script>
+    <script>
+        var socket = io('http://localhost:3000');
+
+        socket.on('delete-product', function (msg) {
+            const url = new URL(window.location.href);
+            const id = url.searchParams.get('id');
+            document.querySelector(".table-container").innerHTML = '';
+            generarTabla(id);
+        });
+        socket.on('report-product', function (msg) {
+            const oculto = document.querySelector(".oculto");
+            oculto.textContent = "Se han agregado reportes, actualiza!"
+            oculto.style.display = "block";
+            oculto.style.marginTop = 0;
+            oculto.style.marginBottom = "2%";
+        });
+    </script>
 </body>
 
 </html>

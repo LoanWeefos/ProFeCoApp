@@ -12,13 +12,13 @@ function crearEmpresa() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nombre, correo, contraseña, tipo, tipoMercado })
+        body: JSON.stringify({ nombre, correo, contraseña, tipo, tipoMercado,  })
     })
         .then(response => {
             if (response.ok) {
                 document.getElementById('register-button').disabled = false;
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -40,7 +40,7 @@ function crearEmpresa() {
             }).then(response => {
                 if (response.ok) {
                     return response.json();
-                } else if (response.status === 400) {
+                } else if (response.status === 400 || response.status === 401) {
                     return response.json().then(data => {
                         const errorMessage = data.message;
                         throw new Error(errorMessage);

@@ -1,4 +1,4 @@
-function calificar(productoId) {
+function calificar(productoId, nombreProducto) {
     const token = sessionStorage.getItem('token');
     let liked;
     let comentario;
@@ -24,12 +24,12 @@ function calificar(productoId) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ liked, comentario, productoId })
+        body: JSON.stringify({ liked, comentario, productoId, nombreProducto })
     })
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -45,5 +45,14 @@ function calificar(productoId) {
             document.querySelector('.button-enviar').style.display = 'none';
             document.querySelector('#comentario').style.display = 'none';
             document.querySelector('#calif-titulo').textContent = '¡Gracias por tus comentarios!';
+        })
+        .catch(error => {
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            } else {
+                customAlert.alert(error, 'Error!');
+            }
         });
 }

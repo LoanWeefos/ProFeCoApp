@@ -84,6 +84,16 @@ exports.getMercado = async (req, res) => {
     }
 }
 
+exports.updateMercado = async (req, res) => {
+    try {
+        const user = await UserService.updateMercado(req.params.id, req.body.estado);
+        return res.json(user);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
 exports.getConsumidor = async (req, res) => {
     try {
         const user = await UserService.findConsumidorById(req.params.id);
@@ -104,6 +114,7 @@ async function registerMercado(req, res, userData) {
     const mercadoData = {
         nombre: req.body.nombre,
         tipo: req.body.tipoMercado,
+        estado: "sin_procesar",
         usuarioId: user.id
     };
     const mercado = await UserService.createMercado(mercadoData);

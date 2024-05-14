@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Reporte.init({
     descripcion: DataTypes.STRING,
-    fecha: DataTypes.DATE,
     estado: DataTypes.STRING,
-    productoId: DataTypes.INTEGER
+    productoId: DataTypes.INTEGER,
+    nombreProducto: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Reporte',

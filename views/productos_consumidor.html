@@ -122,6 +122,9 @@
             const box = document.getElementById(msg.productoId);
             box.querySelector("#nombre").textContent = box.querySelector("#nombre").textContent + "⚠️";
         });
+        socket.on('sancionar', function (msg) {
+            customAlert.alert("Un mercado fue sancionado","","productos_consumidor.html");
+        });
     </script>
     <script>
         const searchInput = document.getElementById('search-input');

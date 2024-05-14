@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   ListaDeseos.init({
     usuarioId: DataTypes.INTEGER,
-    productoId: DataTypes.INTEGER
+    productoId: DataTypes.INTEGER,
+    nombreProducto: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'ListaDeseos',

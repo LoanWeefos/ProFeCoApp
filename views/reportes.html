@@ -26,9 +26,10 @@
                 </div>
                 <div class="user">
                     <div class="userText">
-                        <h1>Wallart <span class="dropdown-arrow">▼</span></h1>
+                        <h1></h1>
                         <ul>
-                            <li><a href="index.html">Cerrar sesión</a></li>
+                            <li><a href="productos_empresa.html">Regresar</a></li>
+                            <li><button onclick="cerrarSesion()">Cerrar sesión</button></li>
                         </ul>
                     </div>
                 </div>
@@ -61,7 +62,7 @@
                         </div>
                     </div>
                     <div class="contenedor">
-                        <button onclick="location.href='productos_empresa.html'">Generar</button>
+                        <button onclick="generarReporte()">Generar</button>
                     </div>
                 </div>
                 <footer>
@@ -70,6 +71,11 @@
             </section>
         </main>
     </div>
+    
+    <script src='../sistemaUsuarios/services/verificar.service.js'></script>
+    <script src='../sistemaUsuarios/services/cerrarSesion.service.js'></script>
+    <script src='../sistemaProductos/services/generarReporte.service.js'></script>
+    <script src='./scripts.views/alerta.js'></script>
 </body>
 
 </html>

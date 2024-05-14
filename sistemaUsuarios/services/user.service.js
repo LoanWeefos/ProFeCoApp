@@ -35,6 +35,18 @@ exports.findMercadoById = (id) => {
     })
 }
 
+exports.updateMercado = async (id, estado) => {
+    const mercado = await Mercado.findOne({
+        where: {
+            usuarioId: id
+        }
+    });
+    if (!mercado) {
+        return res.status(404).json({ message: 'Mercado no encontrado' });
+    }
+    return mercado.update({ estado: estado });
+}
+
 exports.findConsumidorById = (id) => {
     return Consumidor.findOne({
         where: {

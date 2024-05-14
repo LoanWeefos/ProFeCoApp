@@ -15,6 +15,9 @@ module.exports = {
       tipo: {
         type: Sequelize.STRING
       },
+      estado: {
+        type: Sequelize.STRING
+      },
       usuarioId: {
         type: Sequelize.INTEGER,
         allowNull: false,

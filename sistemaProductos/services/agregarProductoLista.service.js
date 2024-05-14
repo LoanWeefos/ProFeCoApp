@@ -1,4 +1,4 @@
-function agregarProductoLista(productoId, nombre) {
+function agregarProductoLista(productoId, nombreProducto) {
     const token = sessionStorage.getItem('token');
     fetch(`http://localhost:8080/api/user`, {
         method: 'GET',
@@ -10,7 +10,7 @@ function agregarProductoLista(productoId, nombre) {
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -29,12 +29,12 @@ function agregarProductoLista(productoId, nombre) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ usuarioId, productoId })
+                body: JSON.stringify({ usuarioId, productoId, nombreProducto })
             })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
-                    } else if (response.status === 400) {
+                    } else if (response.status === 400 || response.status === 401) {
                         return response.json().then(data => {
                             const errorMessage = data.message;
                             throw new Error(errorMessage);
@@ -48,7 +48,16 @@ function agregarProductoLista(productoId, nombre) {
                 .then(data => {
                     const url = window.location.href;
                     const nuevaUrl = url.replace(/^.*\/views\//, '');
-                    customAlert.alert('Producto ' + nombre + " guardado en tu lista!", '', nuevaUrl);
+                    customAlert.alert('Producto ' + nombreProducto + " guardado en tu lista!", '', nuevaUrl);
                 });
+        })
+        .catch(error => {
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            } else {
+                customAlert.alert(error, 'Error!');
+            }
         });
 }

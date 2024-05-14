@@ -17,7 +17,7 @@ function verProducto(productoId) {
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -44,7 +44,7 @@ function verProducto(productoId) {
                 .then(response => {
                     if (response.ok) {
                         return response.json();
-                    } else if (response.status === 400) {
+                    } else if (response.status === 400 || response.status === 401) {
                         return response.json().then(data => {
                             const errorMessage = data.message;
                             throw new Error(errorMessage);
@@ -67,7 +67,7 @@ function verProducto(productoId) {
                         .then(response => {
                             if (response.ok) {
                                 return response.json();
-                            } else if (response.status === 400) {
+                            } else if (response.status === 400 || response.status === 401) {
                                 return response.json().then(data => {
                                     const errorMessage = data.message;
                                     throw new Error(errorMessage);
@@ -88,7 +88,7 @@ function verProducto(productoId) {
                             }).then(response => {
                                 if (response.ok) {
                                     return response.json();
-                                } else if (response.status === 400) {
+                                } else if (response.status === 400 || response.status === 401) {
                                     return response.json().then(data => {
                                         const errorMessage = data.message;
                                         throw new Error(errorMessage);
@@ -100,13 +100,14 @@ function verProducto(productoId) {
                                 }
                             }).then(data => {
                                 const nombre = producto.nombre.toString();
+                                const id = data.usuarioId;
                                 const productoHTML = `
                         <div class="producto-precio">
                             <h1>${nombre}</h1>
                             <h1>$${producto.precio}</h1>
                         </div>
                         <div class="vendido-boton">
-                            <h2>Vendido por ${data.nombre}</h2>
+                            <h2 id=${id} class="id">Vendido por ${data.nombre}</h2>
                             <button class="regresar" onclick="window.history.back();">Regresar</button>
                         </div>
                         <div class="oculto">
@@ -127,13 +128,13 @@ function verProducto(productoId) {
                                 <input id="dislike" type="radio" name="calif" value="dislike" />
                                 <label class="calif-cc2 dislike" for="dislike"></label>
                             </div>
-                            <button class="button-enviar" onclick="calificar(${producto.id})">Enviar</button>
+                            <button class="button-enviar" onclick="calificar(${producto.id}, '${producto.nombre}')">Enviar</button>
                         </div>
                         <textarea id="comentario"></textarea>
                         <div class="comentario-reportar">
                             <button class="button-reportar" onclick="mostrar()">Reportar</button>
                             <textarea id="descripcion" class="reporte"></textarea>
-                            <button class="button-reportar reporte" onclick="reportar(${producto.id})">Enviar</button>
+                            <button class="button-reportar reporte" onclick="reportar(${producto.id}, '${nombre}')">Enviar</button>
                         </div>
                     `;
 
@@ -150,7 +151,7 @@ function verProducto(productoId) {
                                     .then(response => {
                                         if (response.ok) {
                                             return response.json();
-                                        } else if (response.status === 400) {
+                                        } else if (response.status === 400 || response.status === 401) {
                                             return response.json().then(data => {
                                                 const errorMessage = data.message;
                                                 throw new Error(errorMessage);
@@ -181,7 +182,7 @@ function verProducto(productoId) {
                                     .then(response => {
                                         if (response.ok) {
                                             return response.json();
-                                        } else if (response.status === 400) {
+                                        } else if (response.status === 400 || response.status === 401) {
                                             return response.json().then(data => {
                                                 const errorMessage = data.message;
                                                 throw new Error(errorMessage);
@@ -205,13 +206,34 @@ function verProducto(productoId) {
                                     document.querySelector(".oculto").style.display = "block";
                                 }
 
+                                const url = new URL(window.location.href);
+
+                                if (url.searchParams.get('admin')) {
+                                    document.querySelector('.container').style.gridTemplateColumns = 'auto 2fr 1fr';
+                                    document.querySelector('.user').style.gridColumn = '3 / 4';
+                                    document.querySelector('.search-container').style.display = 'none';
+                                    document.querySelector('.agregar-ver').style.display = 'none';
+                                    document.querySelector('.calificacion').style.display = 'none';
+                                    document.querySelector('#comentario').style.display = 'none';
+                                    document.querySelector('.comentario-reportar').style.display = 'none';
+                                }
+
                             })
                         })
                 })
+        })
+        .catch(error => {
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            } else {
+                customAlert.alert(error, 'Error!');
+            }
         });
 }
 
-function buscarProducto(){
+function buscarProducto() {
     const producto = document.querySelector(".producto-precio h1").textContent;
     const url = `resultados.html?search=${producto}`;
     window.location.href = url;

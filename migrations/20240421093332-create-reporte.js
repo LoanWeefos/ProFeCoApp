@@ -12,9 +12,6 @@ module.exports = {
       descripcion: {
         type: Sequelize.STRING
       },
-      fecha: {
-        type: Sequelize.DATE
-      },
       estado: {
         type: Sequelize.STRING
       },
@@ -27,6 +24,9 @@ module.exports = {
         },
         onDelete: 'CASCADE',
         hooks: true
+      },
+      nombreProducto: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

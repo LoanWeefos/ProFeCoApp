@@ -4,6 +4,8 @@ const { Categoria } = require('../../models');
 const { ListaDeseos } = require('../../models');
 const { Calificacion } = require('../../models');
 const { Reporte } = require('../../models');
+const { Usuario } = require('../../models');
+const { Mercado } = require('../../models');
 const { Op } = require('sequelize');
 
 exports.getProduct = (productId) => {
@@ -177,6 +179,53 @@ exports.getAllList = (usuarioId) => {
     });
 }
 
+exports.getWishlist = async (usuarioIdMercado, desde, hasta, nombreProducto) => {
+    try {
+        const productos = await Producto.findAll({
+            where: {
+                usuarioId: usuarioIdMercado
+            }
+        });
+
+        const productoIds = productos.map(producto => producto.id);
+
+        let whereClause = {
+            productoId: productoIds
+        };
+
+        if (nombreProducto) {
+            whereClause.nombreProducto = {
+                [Op.like]: `%${nombreProducto}%`
+            };
+        }
+
+        if (desde) {
+            whereClause.createdAt = {
+                [Op.gte]: new Date(desde)
+            };
+        }
+
+        if (hasta) {
+            if (whereClause.createdAt) {
+                whereClause.createdAt[Op.lte] = new Date(hasta);
+            } else {
+                whereClause.createdAt = {
+                    [Op.lte]: new Date(hasta)
+                };
+            }
+        }
+
+        const list = await ListaDeseos.findAll({
+            where: whereClause
+        });
+
+        return list;
+    } catch (error) {
+        console.error('Error al obtener los reportes del mercado:', error);
+        throw error;
+    }
+};
+
 exports.deleteFromList = (usuarioId, productoId) => {
     return ListaDeseos.destroy({
         where: {
@@ -199,6 +248,54 @@ exports.getCalif = (productoId, usuarioId) => {
     });
 }
 
+exports.getCalifMercado = async (usuarioIdMercado, desde, hasta, nombreProducto) => {
+    try {
+        const productos = await Producto.findAll({
+            where: {
+                usuarioId: usuarioIdMercado
+            }
+        });
+
+        const productoIds = productos.map(producto => producto.id);
+
+        let whereClause = {
+            productoId: productoIds
+        };
+
+        if (nombreProducto) {
+            whereClause.nombreProducto = {
+                [Op.like]: `%${nombreProducto}%`
+            };
+        }
+
+
+        if (desde) {
+            whereClause.createdAt = {
+                [Op.gte]: new Date(desde)
+            };
+        }
+
+        if (hasta) {
+            if (whereClause.createdAt) {
+                whereClause.createdAt[Op.lte] = new Date(hasta);
+            } else {
+                whereClause.createdAt = {
+                    [Op.lte]: new Date(hasta)
+                };
+            }
+        }
+
+        const calif = await Calificacion.findAll({
+            where: whereClause
+        });
+
+        return calif;
+    } catch (error) {
+        console.error('Error al obtener los reportes del mercado:', error);
+        throw error;
+    }
+};
+
 exports.report = (reporte) => {
     return Reporte.create(reporte);
 }
@@ -210,3 +307,82 @@ exports.getReport = (productoId) => {
         }
     });
 }
+
+exports.getReports = () => {
+    return Reporte.findAll();
+}
+
+exports.getReportsTabla = (req, res) => {
+    return Reporte.findAll({
+        include: [
+            {
+                model: Producto,
+                include: [
+                    Usuario,
+                    {
+                        model: Usuario,
+                        include: [Mercado]
+                    }
+                ]
+            }
+        ]
+    });
+}
+
+exports.getInconsistencias = async (usuarioIdMercado, desde, hasta, nombreProducto) => {
+    try {
+        const productos = await Producto.findAll({
+            where: {
+                usuarioId: usuarioIdMercado
+            }
+        });
+
+        const productoIds = productos.map(producto => producto.id);
+
+        let whereClause = {
+            productoId: productoIds
+        };
+
+        if (nombreProducto) {
+            whereClause.nombreProducto = {
+                [Op.like]: `%${nombreProducto}%`
+            };
+        }
+
+
+        if (desde) {
+            whereClause.createdAt = {
+                [Op.gte]: new Date(desde)
+            };
+        }
+
+        if (hasta) {
+            if (whereClause.createdAt) {
+                whereClause.createdAt[Op.lte] = new Date(hasta);
+            } else {
+                whereClause.createdAt = {
+                    [Op.lte]: new Date(hasta)
+                };
+            }
+        }
+
+        const reportes = await Reporte.findAll({
+            where: whereClause
+        });
+
+        return reportes;
+    } catch (error) {
+        console.error('Error al obtener los reportes del mercado:', error);
+        throw error;
+    }
+};
+
+
+exports.updateReport = async (id, estado) => {
+    const reporte = await Reporte.findByPk(id);
+    if (!reporte) {
+        return res.status(404).json({ message: 'Reporte no encontrado' });
+    }
+    return reporte.update({ estado: estado });
+}
+

@@ -10,7 +10,7 @@ function mostrarLista() {
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
@@ -65,7 +65,7 @@ function mostrarLista() {
                     .then(response => {
                         if (response.ok) {
                             return response.json();
-                        } else if (response.status === 400) {
+                        } else if (response.status === 400 || response.status === 401) {
                             return response.json().then(data => {
                                 const errorMessage = data.message;
                                 throw new Error(errorMessage);
@@ -95,6 +95,15 @@ function mostrarLista() {
             });
             const box = document.querySelector("#dialogbox");
             box.style.width = "30%";
+        })
+        .catch(error => {
+            if (error instanceof TypeError && error.message === "Failed to fetch") {
+                error = "Sin conexión con el servidor";
+                sessionStorage.removeItem('token');
+                customAlert.alert(error, 'Error!', 'index.html');
+            } else {
+                customAlert.alert(error, 'Error!');
+            }
         });
 }
 
@@ -117,7 +126,7 @@ function eliminarDeLista(productoId) {
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 400) {
+            } else if (response.status === 400 || response.status === 401) {
                 return response.json().then(data => {
                     const errorMessage = data.message;
                     throw new Error(errorMessage);
