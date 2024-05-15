@@ -27,6 +27,30 @@ exports.findUserById = async (id) => {
     return Usuario.findByPk(id);
 }
 
+exports.deleteUser = async (id) => {
+    return Usuario.destroy({
+        where: {
+            id: id
+        }
+    });
+}
+
+exports.findAllUsers = async () => {
+    const usuarios = await Usuario.findAll({
+        include: [
+            {
+                model: Mercado,
+                required: false
+            },
+            {
+                model: Consumidor,
+                required: false
+            }
+        ]
+    });
+    return usuarios;
+}
+
 exports.findMercadoById = (id) => {
     return Mercado.findOne({
         where: {

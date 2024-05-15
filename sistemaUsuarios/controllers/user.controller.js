@@ -64,9 +64,30 @@ exports.getUser = async (req, res) => {
     });
 }
 
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await UserService.findAllUsers();
+        return res.json(users);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
 exports.getUserById = async (req, res) => {
     try {
         const user = await UserService.findUserById(req.params.id);
+        return res.json(user);
+    } catch (error) {
+        const errorMessage = error.message;
+        return res.status(500).json({ message: 'Error interno del servidor.', error: errorMessage });
+    }
+}
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await UserService.deleteUser(req.params.id);
         return res.json(user);
     } catch (error) {
         const errorMessage = error.message;

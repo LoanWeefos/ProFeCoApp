@@ -298,14 +298,14 @@ tbody>tr:hover {
     padding: 10px 2%;
 }
 
-.titulo{
+.titulo {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-right: 4%;
 }
 
-.botones{
+.botones {
     display: flex;
     justify-content: space-between;
     width: 30%;
@@ -554,3 +554,18 @@ footer {
 }
 
 /*#endregion Alert*/
+
+.elim-button {
+    width: fit-content;
+    background-color: #D34F4F;
+    font-size: 1vw;
+    border-radius: 5px;
+}
+
+.divCont {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 2%;
+    font-size: 2vw;
+}
