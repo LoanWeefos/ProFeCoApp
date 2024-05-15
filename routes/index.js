@@ -29,7 +29,7 @@ const ErrorHandler = require('../utils/middleware/error.middleware');
 router.post('/register', validate(schema.register), ErrorHandler(UserController.register));
 router.post('/login', validate(schema.login), ErrorHandler(UserController.login));
 router.get('/user', AuthGuard, ErrorHandler(UserController.getUser));
-router.get('/users', AuthGuard, ErrorHandler(UserController.getAllUsers));
+router.get('/users', ErrorHandler(UserController.getAllUsers));
 router.get('/user/:id', ErrorHandler(UserController.getUserById));
 router.delete('/user/:id', ErrorHandler(UserController.deleteUser));
 router.get('/mercado/:id', ErrorHandler(UserController.getMercado));

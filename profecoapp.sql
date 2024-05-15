@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `profecoapp` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `profecoapp`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: profecoapp
@@ -29,12 +27,16 @@ CREATE TABLE `calificaciones` (
   `liked` tinyint(1) DEFAULT NULL,
   `comentario` varchar(255) DEFAULT NULL,
   `productoId` int NOT NULL,
+  `usuarioId` int NOT NULL,
+  `nombreProducto` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `productoId` (`productoId`),
-  CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `usuarioId` (`usuarioId`),
+  CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +45,36 @@ CREATE TABLE `calificaciones` (
 
 LOCK TABLES `calificaciones` WRITE;
 /*!40000 ALTER TABLE `calificaciones` DISABLE KEYS */;
+INSERT INTO `calificaciones` VALUES (2,1,'asd',108,6,'Lulu','2024-05-14 20:07:14','2024-05-14 20:07:14');
 /*!40000 ALTER TABLE `calificaciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `categorias`
+--
+
+DROP TABLE IF EXISTS `categorias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categorias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  `productoId` int NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `productoId` (`productoId`),
+  CONSTRAINT `categorias_ibfk_1` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categorias`
+--
+
+LOCK TABLES `categorias` WRITE;
+/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -63,8 +94,8 @@ CREATE TABLE `consumidores` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usuarioId` (`usuarioId`),
-  CONSTRAINT `consumidores_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `consumidores_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,6 +104,7 @@ CREATE TABLE `consumidores` (
 
 LOCK TABLES `consumidores` WRITE;
 /*!40000 ALTER TABLE `consumidores` DISABLE KEYS */;
+INSERT INTO `consumidores` VALUES (2,'Esteban','Duran','Quintanar',6,'2024-05-12 03:49:21','2024-05-12 03:49:21');
 /*!40000 ALTER TABLE `consumidores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,10 +119,13 @@ CREATE TABLE `imagenes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `filename` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
+  `productoId` int NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  KEY `productoId` (`productoId`),
+  CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +134,7 @@ CREATE TABLE `imagenes` (
 
 LOCK TABLES `imagenes` WRITE;
 /*!40000 ALTER TABLE `imagenes` DISABLE KEYS */;
+INSERT INTO `imagenes` VALUES (148,'Lulu.jpeg','uploads\\file-1715740031810-973184447.jpeg',108,'2024-05-14 19:27:11','2024-05-14 19:27:11');
 /*!40000 ALTER TABLE `imagenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,14 +149,15 @@ CREATE TABLE `listadeseos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `usuarioId` int NOT NULL,
   `productoId` int NOT NULL,
+  `nombreProducto` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usuarioId` (`usuarioId`),
   KEY `productoId` (`productoId`),
-  CONSTRAINT `listadeseos_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `listadeseos_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `listadeseos_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `listadeseos_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,6 +166,7 @@ CREATE TABLE `listadeseos` (
 
 LOCK TABLES `listadeseos` WRITE;
 /*!40000 ALTER TABLE `listadeseos` DISABLE KEYS */;
+INSERT INTO `listadeseos` VALUES (2,6,108,'Lulu','2024-05-14 20:06:21','2024-05-14 20:06:21');
 /*!40000 ALTER TABLE `listadeseos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,13 +181,14 @@ CREATE TABLE `mercados` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) DEFAULT NULL,
   `tipo` varchar(255) DEFAULT NULL,
+  `estado` varchar(255) DEFAULT NULL,
   `usuarioId` int NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usuarioId` (`usuarioId`),
-  CONSTRAINT `mercados_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `mercados_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,6 +197,7 @@ CREATE TABLE `mercados` (
 
 LOCK TABLES `mercados` WRITE;
 /*!40000 ALTER TABLE `mercados` DISABLE KEYS */;
+INSERT INTO `mercados` VALUES (1,'LuluNegocios','mercado-sobre-ruedas','liberado',7,'2024-05-12 12:33:34','2024-05-13 17:16:31');
 /*!40000 ALTER TABLE `mercados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,15 +211,16 @@ DROP TABLE IF EXISTS `productos`;
 CREATE TABLE `productos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) DEFAULT NULL,
-  `precio` decimal(10,0) DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `oferta` varchar(255) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `imagenId` int NOT NULL,
+  `usuarioId` int NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `imagenId` (`imagenId`),
-  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`imagenId`) REFERENCES `imagenes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `usuarioId` (`usuarioId`),
+  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,6 +229,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+INSERT INTO `productos` VALUES (108,'Lulu',1000.00,'2x1','asd',7,'2024-05-14 19:27:11','2024-05-14 19:27:11');
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,15 +243,15 @@ DROP TABLE IF EXISTS `reportes`;
 CREATE TABLE `reportes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,
-  `fecha` datetime DEFAULT NULL,
   `estado` varchar(255) DEFAULT NULL,
   `productoId` int NOT NULL,
+  `nombreProducto` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `productoId` (`productoId`),
-  CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +283,7 @@ CREATE TABLE `sequelizemeta` (
 
 LOCK TABLES `sequelizemeta` WRITE;
 /*!40000 ALTER TABLE `sequelizemeta` DISABLE KEYS */;
-INSERT INTO `sequelizemeta` VALUES ('20240421062414-create-usuario.js'),('20240421062420-create-consumidor.js'),('20240421062427-create-mercado.js'),('20240421062439-create-calificacion.js'),('20240421062447-create-reporte.js'),('20240421062453-create-lista-deseos.js'),('20240421063715-create-imagen.js'),('20240421063725-create-producto.js');
+INSERT INTO `sequelizemeta` VALUES ('20240421093316-create-usuario.js'),('20240421093320-create-consumidor.js'),('20240421093322-create-mercado.js'),('20240421093329-create-calificacion.js'),('20240421093332-create-reporte.js'),('20240421093335-create-lista-deseos.js'),('20240421093348-create-imagen.js'),('20240421093351-create-producto.js'),('20240507071703-create-categoria.js');
 /*!40000 ALTER TABLE `sequelizemeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +302,7 @@ CREATE TABLE `usuarios` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +311,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'wikiteban@gmail.com','$2b$10$zihsOgOmHuPuLXV2lU6GCO9SRIQh4QhIvkZS2G.YoRbuouM065UiS','ADMIN','2024-04-21 10:25:56','2024-04-21 10:25:56');
+INSERT INTO `usuarios` VALUES (1,'admin@lulu.com','$2b$10$/nxYjZZXlRIQ/0fC9iNaA.UTl6zPMHYqH6xTuxLv0liqNrx0HNMLq','ADMIN','2024-05-10 01:47:15','2024-05-10 01:47:15'),(6,'esteban@correo.com','$2b$10$hKQX1Ol9zouJfMUZhZ1/Q.WmSYVEQXTXdUWWBuEdKVhUDWkchli/u','CONSUMIDOR','2024-05-12 03:49:21','2024-05-12 03:49:21'),(7,'lulu@lulu.com','$2b$10$on8jOtMeaYZ6FukL5S8iAOSR8yOPnwr/.wr8iAjDCnsHWrvRkvQMC','MERCADO','2024-05-12 12:33:34','2024-05-12 12:33:34');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -282,4 +324,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-21 19:14:20
+-- Dump completed on 2024-05-14 20:29:22

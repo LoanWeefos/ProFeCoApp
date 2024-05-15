@@ -6,7 +6,6 @@ require('dotenv').config();
 var cors = require('cors');
 var http = require('http');
 const socketIO = require('socket.io');
-const puppeteer = require('puppeteer');
 
 const indexRouter = require('./routes/index');
 const app = express();

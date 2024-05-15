@@ -1,9 +1,52 @@
 # ProFeCoApp
 App de ProFeCo desarrollada para la clase de Arquiecturas Empresariales
 
+# -CONTENEDOR-
+# Código para abrir el contenedor de ProFecoApp en Docker:
+```
+docker-compose up -d --build
+```
+Después solo basta con abrir el index.html o ejecutarlo a través de la extensión Live Server.
+# CAMBIAR EL CONFIG.JSON PARA USAR LA BASE
+```
+{
+  "development": {
+    "username": "root",
+    "password": "1234",
+    "database": "profecoApp",
+    "host": "host.docker.internal",
+    "dialect": "mysql",
+    "timezone": "-07:00"
+  },
+  "test": {
+    "username": "root",
+    "password": "1234",
+    "database": "profecoApp",
+    "host": "host.docker.internal",
+    "dialect": "mysql",
+    "timezone": "-07:00"
+  },
+  "production": {
+    "username": "root",
+    "password": "1234",
+    "database": "profecoApp",
+    "host": "host.docker.internal",
+    "dialect": "mysql",
+    "timezone": "-07:00"
+  }
+}
+
+```
+
+# NOTAS:
+ESTE SERVICIO ESTA LIMITADO, PUES SOLO DE MANERA LOCAL SE PUEDE USAR EL SOCKET.IO,
+ADEMÁS DEL CORRECTO RENDERIZADO DE LAS IMAGENES.
+
+
+# -LOCAL-
 # Código para montar los módulos:
 ```
-npm install bcrypt@5.1.1 cookie-parser@1.4.6 cors@2.8.5 dotenv@16.4.5 express@4.19.2 joi@17.12.3 jsonwebtoken@9.0.2 keyv@4.5.4 morgan@1.10.0 mysql2@3.9.6 sequelize-cli@6.6.2 sequelize@6.37.3 winston@3.13.0
+npm install
 ```
 
 # Código para crear la base de datos:
@@ -26,5 +69,3 @@ Pasos para ejecutar:
     ```npm start```
 
 2. Abrir el index.html o ejecutarlo a través de la extensión Live Server.
-
-Nota: resolución para dispostivos de hasta 1024x768px
